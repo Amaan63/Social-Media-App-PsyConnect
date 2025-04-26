@@ -38,12 +38,24 @@ public class UserServiceImplementation implements UserService {
 
   @Override
   public User findUserByEmail(String email) {
-    return null;
+    User user = userRepository.findByEmail(email);
+    return user;
   }
 
   @Override
-  public User followUser(Integer userId1, Integer userId2) {
-    return null;
+  public User followUser(Integer userId1, Integer userId2) throws Exception {
+    // Here user1 wants to follow user2
+    User user1 = findUserById(userId1);
+    User user2 = findUserById(userId2);
+    // Here in user2 follower user1 is added
+    user2.getFollowers().add(user1.getId());
+    // Here in user1 following user2 is added
+    user1.getFollowings().add(user2.getId());
+    // saving the users
+    userRepository.save(user1);
+    userRepository.save(user2);
+    // user1 wants to follow user2 so we will return user1
+    return user1;
   }
 
   @Override
