@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class UserController {
 
   @Autowired
-  UserService userService;
+  private UserService userService;
 
   @PostMapping("/users")
   public User createUser(@RequestBody User user) {
@@ -33,5 +33,11 @@ public class UserController {
   public User updateUser(@RequestBody User user, @PathVariable Integer userId) throws Exception {
     User updatedUser = userService.updateuser(user, userId);
     return updatedUser;
+  }
+
+  @PutMapping("/users/{userId1}/{userId2}")
+  public User followUserHandler(@PathVariable Integer userId1, @PathVariable Integer userId2) throws Exception {
+    User user = userService.followUser(userId1, userId2);
+    return user;
   }
 }
