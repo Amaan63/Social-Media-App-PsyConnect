@@ -1,5 +1,7 @@
 package com.asquare.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,6 +9,7 @@ import com.asquare.models.User;
 import com.asquare.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,8 +39,17 @@ public class UserController {
   }
 
   @PutMapping("/users/{userId1}/{userId2}")
-  public User followUserHandler(@PathVariable Integer userId1, @PathVariable Integer userId2) throws Exception {
+  public User followUserHandler(
+      @PathVariable Integer userId1,
+      @PathVariable Integer userId2) throws Exception {
     User user = userService.followUser(userId1, userId2);
     return user;
   }
+
+  @GetMapping("/users/search")
+  public List<User> searchUser(@RequestParam("query") String query) {
+    List<User> users = userService.searchuser(query);
+    return users;
+  }
+
 }
