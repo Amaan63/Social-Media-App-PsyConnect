@@ -1,6 +1,7 @@
 package com.asquare.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,12 @@ public class UserServiceImplementation implements UserService {
   }
 
   @Override
-  public User findUserById(Integer userId) {
-    return null;
+  public User findUserById(Integer userId) throws Exception {
+    Optional<User> user = userRepository.findById(userId);
+    if (user.isPresent()) {
+      return user.get();
+    }
+    throw new Exception("user Not Exixt with the UserId");
   }
 
   @Override
