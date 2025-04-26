@@ -9,5 +9,4 @@ public class PsyConnectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PsyConnectApplication.class, args);
 	}
-
 }
