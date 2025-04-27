@@ -1,5 +1,7 @@
 package com.asquare.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -46,6 +48,12 @@ public class PostController {
   public ResponseEntity<Post> findPostByIdController(@PathVariable Integer postId) throws Exception {
     Post post = postService.findPostById(postId);
     return new ResponseEntity<Post>(post, HttpStatus.ACCEPTED);
+  }
+
+  @GetMapping("/posts/user/{userId}")
+  public ResponseEntity<List<Post>> findUsersPostController(@PathVariable Integer userId) {
+    List<Post> posts = postService.findPostByUserId(userId);
+    return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
   }
 
 }
