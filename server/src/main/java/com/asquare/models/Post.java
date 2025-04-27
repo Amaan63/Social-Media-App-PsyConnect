@@ -1,6 +1,8 @@
 package com.asquare.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,5 +25,6 @@ public class Post {
   private String image;
   private String video;
   private User user;
+  private List<User> liked = new ArrayList<>();
   private LocalDateTime createdAt;
 }
