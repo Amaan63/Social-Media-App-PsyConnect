@@ -49,13 +49,16 @@ public class PostServiceImplementation implements PostService {
 
   @Override
   public List<Post> findPostByUserId(Integer userId) {
-
     return null;
   }
 
   @Override
   public Post findPostById(Integer postId) throws Exception {
-    return null;
+    Optional<Post> opt = postRepository.findById(postId);
+    if (opt.isEmpty()) {
+      throw new Exception("Post Not Found with id" + postId);
+    }
+    return opt.get();
   }
 
   @Override
