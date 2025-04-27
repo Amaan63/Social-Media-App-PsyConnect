@@ -63,8 +63,7 @@ public class PostServiceImplementation implements PostService {
 
   @Override
   public List<Post> findAllPost() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'findAllPost'");
+    return postRepository.findAll();
   }
 
   @Override
