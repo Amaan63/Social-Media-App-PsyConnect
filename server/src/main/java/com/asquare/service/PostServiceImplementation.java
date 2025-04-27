@@ -47,9 +47,17 @@ public class PostServiceImplementation implements PostService {
     if (post.getUser().getId() != user.getId()) {
       throw new Exception("You can't delete another users post");
     }
+    // Remove this post from all users' saved posts
+    List<User> allUsers = userRepository.findAll(); // You must have a method to get all users
+    for (User u : allUsers) {
+      if (u.getSavedPost().contains(post)) {
+        u.getSavedPost().remove(post);
+        userRepository.save(u); // save user after removing the saved post
+      }
+    }
+
     postRepository.delete(post);
     return "Post Deleted Successfully";
-
   }
 
   @Override
