@@ -18,5 +18,5 @@ public interface PostService {
 
   Post savedPost(Integer postId, Integer userId);
 
-  Post likedPost(Integer postId, Integer userId);
+  Post likedPost(Integer postId, Integer userId) throws Exception;
 }
