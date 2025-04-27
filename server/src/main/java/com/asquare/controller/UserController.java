@@ -26,22 +26,22 @@ public class UserController {
     return savedUser;
   }
 
-  @GetMapping("/users/{userId}")
+  @GetMapping("/user/{userId}")
   public User getUserById(@PathVariable("userId") Integer userId) throws Exception {
     User user = userService.findUserById(userId);
     return user;
   }
 
-  @PutMapping("/user/{id}")
-  public User updateUser(@RequestBody User user, @PathVariable Integer userId) throws Exception {
+  @PutMapping("/user/{userId}")
+  public User updateUser(@RequestBody User user, @PathVariable("userId") Integer userId) throws Exception {
     User updatedUser = userService.updateuser(user, userId);
     return updatedUser;
   }
 
-  @PutMapping("/users/{userId1}/{userId2}")
+  @PutMapping("/users/follow/{userId1}/{userId2}")
   public User followUserHandler(
-      @PathVariable Integer userId1,
-      @PathVariable Integer userId2) throws Exception {
+      @PathVariable("userId1") Integer userId1,
+      @PathVariable("userId2") Integer userId2) throws Exception {
     User user = userService.followUser(userId1, userId2);
     return user;
   }
