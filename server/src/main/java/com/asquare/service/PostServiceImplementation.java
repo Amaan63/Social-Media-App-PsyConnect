@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.asquare.models.Post;
 import com.asquare.models.User;
 import com.asquare.repository.PostRepository;
+import com.asquare.repository.UserRepository;
 
 @Service
 public class PostServiceImplementation implements PostService {
@@ -73,9 +74,15 @@ public class PostServiceImplementation implements PostService {
   }
 
   @Override
-  public Post likedPost(Integer postId, Integer userId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'likedPost'");
+  public Post likedPost(Integer postId, Integer userId) throws Exception {
+    Post post = findPostById(postId);
+    User user = userService.findUserById(userId);
+    if (post.getLiked().contains(user)) {
+      post.getLiked().remove(user);
+    } else {
+      post.getLiked().add(user);
+    }
+    return postRepository.save(post);
   }
 
 }
