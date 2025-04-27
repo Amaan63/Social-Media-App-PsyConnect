@@ -56,4 +56,10 @@ public class PostController {
     return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
   }
 
+  @GetMapping("/posts")
+  public ResponseEntity<List<Post>> findAllPostController() {
+    List<Post> posts = postService.findAllPost();
+    return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+  }
+
 }
