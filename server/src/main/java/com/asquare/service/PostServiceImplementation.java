@@ -1,5 +1,6 @@
 package com.asquare.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class PostServiceImplementation implements PostService {
     Post newPost = new Post();
     newPost.setCaption(post.getCaption());
     newPost.setImage(post.getImage());
-    // newPost.setCreatedAt(new LocalDateTime);
+    newPost.setCreatedAt(LocalDateTime.now());
     newPost.setVideo(post.getVideo());
     newPost.setUser(user);
     postRepository.save(newPost);
@@ -60,7 +61,7 @@ public class PostServiceImplementation implements PostService {
   public Post findPostById(Integer postId) throws Exception {
     Optional<Post> opt = postRepository.findById(postId);
     if (opt.isEmpty()) {
-      throw new Exception("Post Not Found with id" + postId);
+      throw new Exception("Post Not Found with id," + postId);
     }
     return opt.get();
   }
