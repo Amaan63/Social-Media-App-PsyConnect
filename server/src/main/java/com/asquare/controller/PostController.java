@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asquare.models.Post;
+import com.asquare.repository.UserRepository;
 import com.asquare.response.ApiResponse;
 import com.asquare.service.PostService;
 
@@ -18,10 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class PostController {
+
   @Autowired
   PostService postService;
 
@@ -33,7 +34,7 @@ public class PostController {
     return new ResponseEntity<>(createdPost, HttpStatus.ACCEPTED);
   }
 
-  @DeleteMapping("/posts/{postId}/{userId}")
+  @DeleteMapping("/posts/{postId}/user/{userId}")
   public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId, @PathVariable Integer userId) {
     try {
       String message = postService.deletePost(postId, userId);
