@@ -63,7 +63,7 @@ public class PostController {
     return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
   }
 
-  @PutMapping("/posts/{postId}/user/{userId}")
+  @PutMapping("/posts/save/{postId}/user/{userId}")
   public ResponseEntity<Post> savePostController(
       @PathVariable Integer postId,
       @PathVariable Integer userId) throws Exception {
@@ -71,4 +71,11 @@ public class PostController {
     return new ResponseEntity<Post>(post, HttpStatus.ACCEPTED);
   }
 
+  @PutMapping("/posts/like/{postId}/user/{userId}")
+  public ResponseEntity<Post> likePostController(
+      @PathVariable Integer postId,
+      @PathVariable Integer userId) throws Exception {
+    Post post = postService.likedPost(postId, userId);
+    return new ResponseEntity<Post>(post, HttpStatus.ACCEPTED);
+  }
 }
