@@ -27,4 +27,5 @@ public class User {
   private String gender;
   private List<Integer> followers = new ArrayList<>();
   private List<Integer> followings = new ArrayList<>();
+  private List<Post> savedPost = new ArrayList<>();
 }
