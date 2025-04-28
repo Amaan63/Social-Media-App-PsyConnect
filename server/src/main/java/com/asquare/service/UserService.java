@@ -17,4 +17,6 @@ public interface UserService {
   public User updateuser(User user, Integer userId) throws Exception;
 
   public List<User> searchuser(String query);
+
+  public void checkIfUserExistsByEmail(String email) throws Exception;
 }
