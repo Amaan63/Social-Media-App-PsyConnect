@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.asquare.models.User;
@@ -15,13 +16,16 @@ public class UserServiceImplementation implements UserService {
   @Autowired
   UserRepository userRepository;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   @Override
   public User registerUser(User user) {
     User newUser = new User();
     newUser.setEmail(user.getEmail());
     newUser.setFirstName(user.getFirstName());
     newUser.setLastName(user.getLastName());
-    newUser.setPassword(user.getPassword());
+    newUser.setPassword(passwordEncoder.encode(user.getPassword()));
     newUser.setGender(user.getGender());
     User savedUser = userRepository.save(newUser);
     return savedUser;
@@ -84,6 +88,17 @@ public class UserServiceImplementation implements UserService {
   @Override
   public List<User> searchuser(String query) {
     return userRepository.searchUser(query);
+  }
+
+  @Override
+  public void checkIfUserExistsByEmail(String email) throws Exception {
+    // Check if a user already exists with the given email
+    User isExist = userRepository.findByEmail(email);
+
+    // If the email is already used, throw an exception
+    if (isExist != null) {
+      throw new Exception("This email is already used with another account");
+    }
   }
 
 }
