@@ -2,6 +2,8 @@ package com.asquare.service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+
 import com.asquare.models.User;
 
 public interface UserService {
@@ -19,4 +21,6 @@ public interface UserService {
   public List<User> searchuser(String query);
 
   public void checkIfUserExistsByEmail(String email) throws Exception;
+
+  public Authentication authenticate(String email, String password) throws Exception;
 }
