@@ -24,7 +24,7 @@ public class AuthController {
 
   // Endpoint to create a new user
   @PostMapping("/signup")
-  public ResponseEntity<AuthResponse> createUser(@RequestBody User user) {
+  public ResponseEntity<AuthResponse> signUpUser(@RequestBody User user) {
     try {
       // Check if the email already exists using the service method
       userService.checkIfUserExistsByEmail(user.getEmail());
@@ -45,4 +45,5 @@ public class AuthController {
       return new ResponseEntity<>(new AuthResponse(null, e.getMessage()), HttpStatus.CONFLICT);
     }
   }
+
 }
