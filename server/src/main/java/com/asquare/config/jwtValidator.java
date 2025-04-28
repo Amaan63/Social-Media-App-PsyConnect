@@ -31,8 +31,6 @@ public class JwtValidator extends OncePerRequestFilter {
       } catch (Exception e) {
         throw new BadCredentialsException("Invalid Token....");
       }
-    } else {
-      throw new BadCredentialsException("Please Provide a Valid Token");
     }
     filterChain.doFilter(request, response);
   }
