@@ -21,7 +21,7 @@ public class AppConfig {
             .requestMatchers("/public/**").permitAll()// Allow POST /public to be publicly accessible for creating user
             .requestMatchers("/private/**").authenticated()// Block all the /private and require authentication
             .anyRequest().permitAll())
-        .addFilterBefore(new jwtValidator(), BasicAuthenticationFilter.class)
+        .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
         .csrf(csf -> csf.disable());
     return http.build();
   }
