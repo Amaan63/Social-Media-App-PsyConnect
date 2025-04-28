@@ -20,12 +20,6 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @PostMapping("/public/users")
-  public User createUser(@RequestBody User user) {
-    User savedUser = userService.registerUser(user);
-    return savedUser;
-  }
-
   @GetMapping("/private/user/{userId}")
   public User getUserById(@PathVariable("userId") Integer userId) throws Exception {
     User user = userService.findUserById(userId);
