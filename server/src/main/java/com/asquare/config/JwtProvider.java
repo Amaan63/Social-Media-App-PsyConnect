@@ -13,7 +13,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtProvider {
   private static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-  private static String generatedToken(Authentication auth) {
+  public static String generatedToken(Authentication auth) {
     String jwt = Jwts.builder()
         .setIssuer("Psychomantis")
         .setIssuedAt(new Date())
