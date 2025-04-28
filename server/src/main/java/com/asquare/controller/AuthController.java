@@ -23,7 +23,7 @@ public class AuthController {
   private UserService userService;
 
   // Endpoint to create a new user
-  @PostMapping("/users/signUp")
+  @PostMapping("/signup")
   public ResponseEntity<AuthResponse> createUser(@RequestBody User user) {
     try {
       // Check if the email already exists using the service method
