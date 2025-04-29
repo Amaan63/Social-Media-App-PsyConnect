@@ -1,5 +1,6 @@
 package com.asquare.service;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class CommentServiceImplementation implements CommentService {
     }
     comment.setUser(user);
     comment.setContent(comment.getContent());
-    comment.setCreatedAt(comment.getCreatedAt());
+    comment.setCreatedAt(LocalDateTime.now());
     Comment savedComment = commentRepository.save(comment);
     post.getComments().add(savedComment);
     postRepository.save(post);
