@@ -1,6 +1,7 @@
 package com.asquare.service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,8 +46,12 @@ public class CommentServiceImplementation implements CommentService {
   }
 
   @Override
-  public Comment findCommentById(Integer commentId) {
-    return null;
+  public Comment findCommentById(Integer commentId) throws Exception {
+    Optional<Comment> opt = commentRepository.findById(commentId);
+    if (opt.isEmpty()) {
+      throw new Exception("Commeent not Exist");
+    }
+    return opt.get();
   }
 
   @Override
