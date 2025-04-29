@@ -37,7 +37,7 @@ public class ReelsServiceImplementation implements ReelsService {
       throw new Exception("Failed to create reel: " + e.getMessage(), e);
     }
   }
-  
+
   @Override
   public List<Reels> findAllReels() throws Exception {
     try {
@@ -48,6 +48,29 @@ public class ReelsServiceImplementation implements ReelsService {
       return reels;
     } catch (Exception e) {
       throw new Exception("Failed to fetch all reels: " + e.getMessage(), e);
+    }
+  }
+
+  @Override
+  public List<Reels> findUsersReel(Integer userId) throws Exception {
+    try {
+      if (userId == null) {
+        throw new Exception("User ID cannot be null");
+      }
+
+      User user = userService.findUserById(userId);
+      if (user == null) {
+        throw new Exception("User not found with ID: " + userId);
+      }
+
+      List<Reels> reels = reelsRepository.findByUserId(userId);
+      if (reels == null || reels.isEmpty()) {
+        throw new Exception("No reels found for user ID: " + userId);
+      }
+
+      return reels;
+    } catch (Exception e) {
+      throw new Exception("Failed to fetch user's reels: " + e.getMessage(), e);
     }
   }
 }
