@@ -30,9 +30,11 @@ public class UserController {
     return user;
   }
 
-  @PutMapping("/user/{userId}")
-  public User updateUser(@RequestBody User user, @PathVariable("userId") Integer userId) throws Exception {
-    User updatedUser = userService.updateuser(user, userId);
+  @PutMapping("/user/update")
+  public User updateUser(@RequestBody User user, @RequestHeader("Authorization") String jwt) throws Exception {
+    // reqUser is the user who is logged in and can update his own ID
+    User reqUser = userService.findUserByJwt(jwt);
+    User updatedUser = userService.updateuser(user, reqUser.getId());
     return updatedUser;
   }
 
