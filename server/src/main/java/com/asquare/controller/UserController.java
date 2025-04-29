@@ -3,8 +3,6 @@ package com.asquare.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asquare.models.User;
@@ -38,11 +36,12 @@ public class UserController {
     return updatedUser;
   }
 
-  @PutMapping("/users/follow/{userId1}/{userId2}")
+  @PutMapping("/users/follow/{userId2}")
   public User followUserHandler(
-      @PathVariable("userId1") Integer userId1,
+      @RequestHeader("Authorization") String jwt,
       @PathVariable("userId2") Integer userId2) throws Exception {
-    User user = userService.followUser(userId1, userId2);
+    User reqUser = userService.findUserByJwt(jwt);
+    User user = userService.followUser(reqUser.getId(), userId2);
     return user;
   }
 
