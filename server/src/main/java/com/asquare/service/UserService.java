@@ -23,4 +23,6 @@ public interface UserService {
   public void checkIfUserExistsByEmail(String email) throws Exception;
 
   public Authentication authenticate(String email, String password) throws Exception;
+
+  public User findUserByJwt(String jwt) throws Exception;
 }
