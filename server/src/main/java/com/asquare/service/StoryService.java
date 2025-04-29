@@ -3,11 +3,12 @@ package com.asquare.service;
 import java.util.List;
 
 import com.asquare.models.Story;
+import com.asquare.models.User;
 
 public interface StoryService {
 
-  public Story createStory(Story story, Integer userId);
+  public Story createStory(Story story, User user) throws Exception;
 
-  public List<Story> findStoryByUserId(Integer userId);
+  public List<Story> findStoryByUserId(Integer userId) throws Exception;
 
 }
