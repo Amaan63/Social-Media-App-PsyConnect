@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.asquare.config.JwtProvider;
 import com.asquare.models.User;
 import com.asquare.repository.UserRepository;
 
@@ -136,4 +137,26 @@ public class UserServiceImplementation implements UserService {
       throw new BadCredentialsException("The email " + email + " is not registered");
     }
   }
+
+  @Override
+  public User findUserByJwt(String jwt) throws Exception {
+    try {
+      String email = JwtProvider.getEmailFromJwtToken(jwt);
+
+      if (email == null || email.isEmpty()) {
+        throw new Exception("Invalid JWT token. Email not found.");
+      }
+
+      User user = userRepository.findByEmail(email);
+      if (user == null) {
+        throw new Exception("User not found for email: " + email);
+      }
+
+      return user;
+    } catch (Exception e) {
+      // Optional: log the error for debugging
+      throw new Exception("Error while extracting user from JWT: " + e.getMessage());
+    }
+  }
+
 }
