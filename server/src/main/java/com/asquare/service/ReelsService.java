@@ -7,9 +7,9 @@ import com.asquare.models.User;
 
 public interface ReelsService {
 
-  public Reels createReel(Reels reel, User user);
+  public Reels createReel(Reels reel, User user) throws Exception;
 
-  public List<Reels> findAllReels();
+  public List<Reels> findAllReels() throws Exception;
 
-  public List<Reels> findUsersReel(Integer userId);
+  public List<Reels> findUsersReel(Integer userId) throws Exception;
 }
