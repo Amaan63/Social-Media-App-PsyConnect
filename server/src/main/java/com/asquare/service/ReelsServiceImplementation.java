@@ -24,6 +24,8 @@ public class ReelsServiceImplementation implements ReelsService {
     try {
       if (reel == null || user == null) {
         throw new Exception("Reel or User cannot be null");
+      } else if (reel == null || reel.getTitle() == null || reel.getVideo() == null) {
+        throw new Exception("Reels is empty or Title or Video is empty");
       }
 
       Reels createReel = new Reels();
