@@ -51,4 +51,13 @@ public class ReelsController {
     }
   }
 
+  @GetMapping("reels/users/{userId}")
+  public ResponseEntity<?> findUsersReel(@PathVariable("userId") Integer userId) {
+    try {
+      List<Reels> allReels = reelsService.findUsersReel(userId);
+      return new ResponseEntity<>(allReels, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error fetching user's reels: " + e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+  }
 }
