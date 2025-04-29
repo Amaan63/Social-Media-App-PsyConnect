@@ -37,4 +37,17 @@ public class ReelsServiceImplementation implements ReelsService {
       throw new Exception("Failed to create reel: " + e.getMessage(), e);
     }
   }
+  
+  @Override
+  public List<Reels> findAllReels() throws Exception {
+    try {
+      List<Reels> reels = reelsRepository.findAll();
+      if (reels == null || reels.isEmpty()) {
+        throw new Exception("No reels found");
+      }
+      return reels;
+    } catch (Exception e) {
+      throw new Exception("Failed to fetch all reels: " + e.getMessage(), e);
+    }
+  }
 }
