@@ -28,4 +28,10 @@ public class StoryServiceImplementation implements StoryService {
     createdStory.setCreatedAt(LocalDateTime.now());
     return storyRepository.save(createdStory);
   }
+
+  @Override
+  public List<Story> findStoryByUserId(Integer userId) throws Exception {
+    User user = userService.findUserById(userId);
+    return storyRepository.findByUserId(user.getId());
+  }
 }
