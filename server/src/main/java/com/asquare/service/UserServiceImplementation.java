@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +20,9 @@ public class UserServiceImplementation implements UserService {
 
   @Autowired
   UserRepository userRepository;
+
+  @Autowired
+  CustomUserDetailsService customUserDetailsService;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -101,4 +109,31 @@ public class UserServiceImplementation implements UserService {
     }
   }
 
+  @Override
+  public Authentication authenticate(String email, String password) throws Exception {
+    if (email == null || email.trim().isEmpty()) {
+      throw new BadCredentialsException("Email is required, Cannot Be Null");
+    }
+    try {
+      // Load user details from the database based on the provided email
+      UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+
+      // If the provided password does not match the stored encoded password, throw an
+      // exception
+      if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+        throw new BadCredentialsException("Password didn't match");
+      }
+
+      // If both email and password are correct, create and return an Authentication
+      // object
+      // This Authentication object contains the user details and their authorities
+      // (roles/permissions)
+      return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    } catch (UsernameNotFoundException ex) {
+      // If user not found by email
+      // If no user is found with the given email, throw an exception indicating
+      // invalid username
+      throw new BadCredentialsException("The email " + email + " is not registered");
+    }
+  }
 }
