@@ -41,4 +41,14 @@ public class ReelsController {
     }
   }
 
+  @GetMapping("reels/allReels")
+  public ResponseEntity<?> findAllReels() {
+    try {
+      List<Reels> allReels = reelsService.findAllReels();
+      return new ResponseEntity<>(allReels, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error fetching all reels: " + e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+  }
+
 }
