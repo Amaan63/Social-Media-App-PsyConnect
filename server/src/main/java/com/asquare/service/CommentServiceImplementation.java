@@ -55,8 +55,15 @@ public class CommentServiceImplementation implements CommentService {
   }
 
   @Override
-  public Comment likeComment(Integer commentId, Integer userId) {
-    return null;
+  public Comment likeComment(Integer commentId, Integer userId) throws Exception {
+    Comment comment = findCommentById(commentId);
+    User user = userService.findUserById(userId);
+    if (!comment.getLiked().contains(user)) {
+      comment.getLiked().add(user);
+    } else {
+      comment.getLiked().remove(user);
+    }
+    return commentRepository.save(comment);
   }
 
 }
