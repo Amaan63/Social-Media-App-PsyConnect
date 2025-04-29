@@ -8,34 +8,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asquare.models.Post;
+import com.asquare.models.User;
 import com.asquare.response.ApiResponse;
 import com.asquare.service.PostService;
+import com.asquare.service.UserService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
+@RequestMapping("/private")
 public class PostController {
 
   @Autowired
   PostService postService;
 
-  @PostMapping("/posts/user/{userId}")
+  @Autowired
+  UserService userService;
+
+  @PostMapping("/posts/createPost")
   public ResponseEntity<Post> createPost(
       @RequestBody Post post,
-      @PathVariable Integer userId) throws Exception {
-    Post createdPost = postService.createNewPost(post, userId);
+      @RequestHeader("Authorization") String jwt) throws Exception {
+    User user = userService.findUserByJwt(jwt);
+    Post createdPost = postService.createNewPost(post, user.getId());
     return new ResponseEntity<>(createdPost, HttpStatus.ACCEPTED);
   }
 
-  @DeleteMapping("/posts/{postId}/user/{userId}")
-  public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId, @PathVariable Integer userId) {
+  @DeleteMapping("/posts/deletePost/{postId}")
+  public ResponseEntity<ApiResponse> deletePost(
+      @PathVariable Integer postId,
+      @RequestHeader("Authorization") String jwt) {
     try {
-      String message = postService.deletePost(postId, userId);
+      User user = userService.findUserByJwt(jwt);
+      String message = postService.deletePost(postId, user.getId());
       ApiResponse res = new ApiResponse(message, true); // Agar sab sahi hai to success
       return new ResponseEntity<>(res, HttpStatus.OK);
     } catch (Exception e) {
@@ -56,25 +68,27 @@ public class PostController {
     return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
   }
 
-  @GetMapping("/posts")
+  @GetMapping("/posts/allPosts")
   public ResponseEntity<List<Post>> findAllPostController() {
     List<Post> posts = postService.findAllPost();
     return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
   }
 
-  @PutMapping("/posts/save/{postId}/user/{userId}")
+  @PutMapping("/posts/savePost/{postId}")
   public ResponseEntity<Post> savePostController(
       @PathVariable Integer postId,
-      @PathVariable Integer userId) throws Exception {
-    Post post = postService.savedPost(postId, userId);
+      @RequestHeader("Authorization") String jwt) throws Exception {
+    User user = userService.findUserByJwt(jwt);
+    Post post = postService.savedPost(postId, user.getId());
     return new ResponseEntity<Post>(post, HttpStatus.ACCEPTED);
   }
 
-  @PutMapping("/posts/like/{postId}/user/{userId}")
+  @PutMapping("/posts/likePost/{postId}")
   public ResponseEntity<Post> likePostController(
       @PathVariable Integer postId,
-      @PathVariable Integer userId) throws Exception {
-    Post post = postService.likedPost(postId, userId);
+      @RequestHeader("Authorization") String jwt) throws Exception {
+    User user = userService.findUserByJwt(jwt);
+    Post post = postService.likedPost(postId, user.getId());
     return new ResponseEntity<Post>(post, HttpStatus.ACCEPTED);
   }
 }
