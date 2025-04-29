@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.asquare.models.Comment;
 import com.asquare.models.Post;
@@ -11,6 +12,7 @@ import com.asquare.models.User;
 import com.asquare.repository.CommentRepository;
 import com.asquare.repository.PostRepository;
 
+@Service
 public class CommentServiceImplementation implements CommentService {
 
   @Autowired
