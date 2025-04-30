@@ -19,4 +19,13 @@ public class GlobalExceptions {
         LocalDateTime.now());
     return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(UserException.class)
+  public ResponseEntity<ErrorDetails> userExceptionHandler(UserException ex, WebRequest request) {
+    ErrorDetails error = new ErrorDetails(
+        ex.getMessage(),
+        request.getDescription(false),
+        LocalDateTime.now());
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
 }
