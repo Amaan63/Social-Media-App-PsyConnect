@@ -3,6 +3,8 @@ package com.asquare.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asquare.models.User;
@@ -23,40 +25,74 @@ public class UserController {
   private UserService userService;
 
   @GetMapping("/user/{userId}")
-  public User getUserById(@PathVariable("userId") Integer userId) throws Exception {
-    User user = userService.findUserById(userId);
-    return user;
+  public ResponseEntity<?> getUserById(@PathVariable("userId") Integer userId) {
+    try {
+      User user = userService.findUserById(userId);
+      if (user == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with ID: " + userId);
+      }
+      return ResponseEntity.ok(user);
+    } catch (Exception ex) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch user: " + ex.getMessage());
+    }
   }
 
   @PutMapping("/user/update")
-  public User updateUser(@RequestBody User user, @RequestHeader("Authorization") String jwt) throws Exception {
-    // reqUser is the user who is logged in and can update his own ID
-    User reqUser = userService.findUserByJwt(jwt);
-    User updatedUser = userService.updateuser(user, reqUser.getId());
-    return updatedUser;
+  public ResponseEntity<?> updateUser(@RequestBody User user, @RequestHeader("Authorization") String jwt) {
+    try {
+      User reqUser = userService.findUserByJwt(jwt);
+      if (reqUser == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
+      }
+      User updatedUser = userService.updateuser(user, reqUser.getId());
+      return ResponseEntity.ok(updatedUser);
+    } catch (Exception ex) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update user: " + ex.getMessage());
+    }
   }
 
   @PutMapping("/users/follow/{userId2}")
-  public User followUserHandler(
+  public ResponseEntity<?> followUserHandler(
       @RequestHeader("Authorization") String jwt,
-      @PathVariable("userId2") Integer userId2) throws Exception {
-    User reqUser = userService.findUserByJwt(jwt);
-    User user = userService.followUser(reqUser.getId(), userId2);
-    return user;
+      @PathVariable("userId2") Integer userId2) {
+    try {
+      User reqUser = userService.findUserByJwt(jwt);
+      if (reqUser == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
+      }
+      User user = userService.followUser(reqUser.getId(), userId2);
+      return ResponseEntity.ok(user);
+    } catch (Exception ex) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to follow user: " + ex.getMessage());
+    }
   }
 
   @GetMapping("/users/search")
-  public List<User> searchUser(@RequestParam("query") String query) {
-    List<User> users = userService.searchuser(query);
-    return users;
+  public ResponseEntity<?> searchUser(@RequestParam("query") String query) {
+    try {
+      List<User> users = userService.searchuser(query);
+      if (users == null || users.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found matching the query: " + query);
+      }
+      return ResponseEntity.ok(users);
+    } catch (Exception ex) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Search failed: " + ex.getMessage());
+    }
   }
 
   @GetMapping("/user/profile")
-  public User getUserFromToken(@RequestHeader("Authorization") String jwt) throws Exception {
-    // System.out.println("jwt ------ " + jwt);
-    User user = userService.findUserByJwt(jwt);
-    user.setPassword(null);
-    return user;
+  public ResponseEntity<?> getUserFromToken(@RequestHeader("Authorization") String jwt) {
+    try {
+      User user = userService.findUserByJwt(jwt);
+      if (user == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
+      }
+      user.setPassword(null);
+      return ResponseEntity.ok(user);
+    } catch (Exception ex) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Failed to fetch profile: " + ex.getMessage());
+    }
   }
 
 }
