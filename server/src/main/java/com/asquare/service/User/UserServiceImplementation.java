@@ -115,7 +115,7 @@ public class UserServiceImplementation implements UserService {
   @Override
   public Authentication authenticate(String email, String password) throws UserException {
     if (email == null || email.trim().isEmpty()) {
-      throw new BadCredentialsException("Email is required, Cannot Be Null");
+      throw new UserException("Email is required, Cannot Be Null");
     }
     try {
       // Load user details from the database based on the provided email
@@ -132,11 +132,11 @@ public class UserServiceImplementation implements UserService {
       // This Authentication object contains the user details and their authorities
       // (roles/permissions)
       return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-    } catch (UserException ex) {
+    } catch (UsernameNotFoundException ex) {
       // If user not found by email
       // If no user is found with the given email, throw an exception indicating
       // invalid username
-      throw new UserException("The email " + email + " is not registered");
+      throw new UsernameNotFoundException("The email " + email + " is not registered");
     }
   }
 
