@@ -19,10 +19,15 @@ public class ChatServiceImplementation implements ChatService {
 
   @Override
   public Chat createChat(User loggedInUser, User targetUser) throws Exception {
+    if (loggedInUser == null || targetUser == null) {
+      throw new Exception("Both users must be valid to create a chat.");
+    }
+
     Chat isExist = chatRepository.findChatBetweenUsers(loggedInUser, targetUser);
     if (isExist != null) {
       return isExist;
     }
+
     Chat chat = new Chat();
     chat.getUsers().add(targetUser);
     chat.getUsers().add(loggedInUser);
@@ -32,15 +37,16 @@ public class ChatServiceImplementation implements ChatService {
 
   @Override
   public Chat findChatById(Integer chatId) throws Exception {
-    Optional<Chat> opt = chatRepository.findById(chatId);
-    if (opt.isEmpty()) {
-      throw new Exception("Chat Not Found with id - " + chatId);
-    }
-    return opt.get();
+    return chatRepository.findById(chatId)
+        .orElseThrow(() -> new Exception("Chat not found with id - " + chatId));
   }
 
   @Override
   public List<Chat> findUsersChat(Integer userId) throws Exception {
-    return chatRepository.findByUsersId(userId);
+    List<Chat> chats = chatRepository.findByUsersId(userId);
+    if (chats.isEmpty()) {
+      throw new Exception("No chats found for user with id - " + userId);
+    }
+    return chats;
   }
 }
