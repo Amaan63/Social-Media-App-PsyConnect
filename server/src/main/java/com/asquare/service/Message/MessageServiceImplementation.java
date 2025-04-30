@@ -23,8 +23,20 @@ public class MessageServiceImplementation implements MessageService {
 
   @Override
   public Message createMessage(User user, Integer chatId, Message reqMessage) throws Exception {
-    Message message = new Message();
+    if (user == null) {
+      throw new Exception("User must not be null.");
+    }
+
+    if (reqMessage == null || reqMessage.getContent() == null || reqMessage.getContent().trim().isEmpty()) {
+      throw new Exception("Message content must not be empty.");
+    }
+
     Chat chat = chatService.findChatById(chatId);
+    if (chat == null) {
+      throw new Exception("Chat not found with the given chat ID: " + chatId);
+    }
+
+    Message message = new Message();
     message.setChat(chat);
     message.setContent(reqMessage.getContent());
     message.setImage(reqMessage.getImage());
@@ -37,7 +49,7 @@ public class MessageServiceImplementation implements MessageService {
   public List<Message> findChatsMessages(Integer chatId) throws Exception {
     Chat chat = chatService.findChatById(chatId);
     if (chat == null) {
-      throw new Exception("Chat not found with the Given Chat Id " + chatId);
+      throw new Exception("Chat not found with the given chat ID: " + chatId);
     }
     return messageRepository.findByChatId(chatId);
   }
