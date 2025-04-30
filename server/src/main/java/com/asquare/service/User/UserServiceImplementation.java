@@ -47,7 +47,7 @@ public class UserServiceImplementation implements UserService {
     if (user.isPresent()) {
       return user.get();
     }
-    throw new Exception("user Not Exixt with the UserId");
+    throw new Exception("user Not Exist with the UserId " + userId);
   }
 
   @Override
