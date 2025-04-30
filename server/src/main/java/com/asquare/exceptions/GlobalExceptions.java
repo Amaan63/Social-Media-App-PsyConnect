@@ -47,4 +47,31 @@ public class GlobalExceptions {
     return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(PostException.class)
+  public ResponseEntity<ErrorDetails> postExceptionHandler(PostException ex, WebRequest request) {
+    ErrorDetails error = new ErrorDetails(
+        ex.getMessage(),
+        request.getDescription(false),
+        LocalDateTime.now());
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ReelsException.class)
+  public ResponseEntity<ErrorDetails> postExceptionHandler(ReelsException ex, WebRequest request) {
+    ErrorDetails error = new ErrorDetails(
+        ex.getMessage(),
+        request.getDescription(false),
+        LocalDateTime.now());
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(StoryException.class)
+  public ResponseEntity<ErrorDetails> postExceptionHandler(StoryException ex, WebRequest request) {
+    ErrorDetails error = new ErrorDetails(
+        ex.getMessage(),
+        request.getDescription(false),
+        LocalDateTime.now());
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
+
 }

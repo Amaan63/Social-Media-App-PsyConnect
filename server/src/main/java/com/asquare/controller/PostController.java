@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asquare.exceptions.PostException;
 import com.asquare.models.Post;
 import com.asquare.models.User;
 import com.asquare.response.ApiResponse;
@@ -63,13 +64,13 @@ public class PostController {
   }
 
   @GetMapping("/posts/user/{userId}")
-  public ResponseEntity<List<Post>> findUsersPostController(@PathVariable Integer userId) {
+  public ResponseEntity<List<Post>> findUsersPostController(@PathVariable Integer userId) throws PostException {
     List<Post> posts = postService.findPostByUserId(userId);
     return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
   }
 
   @GetMapping("/posts/allPosts")
-  public ResponseEntity<List<Post>> findAllPostController() {
+  public ResponseEntity<List<Post>> findAllPostController() throws PostException {
     List<Post> posts = postService.findAllPost();
     return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
   }

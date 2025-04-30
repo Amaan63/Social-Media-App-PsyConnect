@@ -7,6 +7,7 @@ import com.asquare.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.asquare.exceptions.ReelsException;
 import com.asquare.models.Reels;
 import com.asquare.models.User;
 import com.asquare.repository.ReelsRepository;
@@ -24,9 +25,9 @@ public class ReelsServiceImplementation implements ReelsService {
   public Reels createReel(Reels reel, User user) throws Exception {
     try {
       if (reel == null || user == null) {
-        throw new Exception("Reel or User cannot be null");
+        throw new ReelsException("Reel or User cannot be null");
       } else if (reel == null || reel.getTitle() == null || reel.getVideo() == null) {
-        throw new Exception("Reels is empty or Title or Video is empty");
+        throw new ReelsException("Reels is empty or Title or Video is empty");
       }
 
       Reels createReel = new Reels();
@@ -46,7 +47,7 @@ public class ReelsServiceImplementation implements ReelsService {
     try {
       List<Reels> reels = reelsRepository.findAll();
       if (reels == null || reels.isEmpty()) {
-        throw new Exception("No reels found");
+        throw new ReelsException("No reels found");
       }
       return reels;
     } catch (Exception e) {
@@ -58,17 +59,17 @@ public class ReelsServiceImplementation implements ReelsService {
   public List<Reels> findUsersReel(Integer userId) throws Exception {
     try {
       if (userId == null) {
-        throw new Exception("User ID cannot be null");
+        throw new ReelsException("User ID cannot be null");
       }
 
       User user = userService.findUserById(userId);
       if (user == null) {
-        throw new Exception("User not found with ID: " + userId);
+        throw new ReelsException("User not found with ID: " + userId);
       }
 
       List<Reels> reels = reelsRepository.findByUserId(userId);
       if (reels == null || reels.isEmpty()) {
-        throw new Exception("No reels found for user ID: " + userId);
+        throw new ReelsException("No reels found for user ID: " + userId);
       }
 
       return reels;

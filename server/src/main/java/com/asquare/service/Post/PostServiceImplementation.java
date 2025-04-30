@@ -8,6 +8,8 @@ import com.asquare.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.asquare.exceptions.PostException;
+import com.asquare.exceptions.UserException;
 import com.asquare.models.Post;
 import com.asquare.models.User;
 import com.asquare.repository.PostRepository;
@@ -26,7 +28,7 @@ public class PostServiceImplementation implements PostService {
   UserRepository userRepository;
 
   @Override
-  public Post createNewPost(Post post, Integer userId) throws Exception {
+  public Post createNewPost(Post post, Integer userId) throws PostException, UserException {
 
     User user = userService.findUserById(userId);
 
@@ -46,7 +48,7 @@ public class PostServiceImplementation implements PostService {
     User user = userService.findUserById(userId);
 
     if (post.getUser().getId() != user.getId()) {
-      throw new Exception("You can't delete another users post");
+      throw new PostException("You can't delete another users post");
     }
     // Remove this post from all users' saved posts
     List<User> allUsers = userRepository.findAll(); // You must have a method to get all users

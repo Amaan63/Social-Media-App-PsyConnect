@@ -7,6 +7,8 @@ import com.asquare.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.asquare.exceptions.StoryException;
+import com.asquare.exceptions.UserException;
 import com.asquare.models.Story;
 import com.asquare.models.User;
 import com.asquare.repository.StoryRepository;
@@ -21,13 +23,13 @@ public class StoryServiceImplementation implements StoryService {
   private UserService userService;
 
   @Override
-  public Story createStory(Story story, User user) throws Exception {
+  public Story createStory(Story story, User user) throws StoryException {
     if (story.getCaption() == null || story.getImage() == null) {
-      throw new IllegalArgumentException("Caption and image cannot be null.");
+      throw new StoryException("Caption and image cannot be null.");
     } else if (story.getImage().isEmpty()) {
-      throw new IllegalArgumentException("Image Cannot Be null");
+      throw new StoryException("Image Cannot Be null");
     } else if (story.getCaption().isEmpty()) {
-      throw new IllegalAccessException("Caption Cannot be Null");
+      throw new StoryException("Caption Cannot be Null");
     }
 
     Story createdStory = new Story();
@@ -39,15 +41,15 @@ public class StoryServiceImplementation implements StoryService {
   }
 
   @Override
-  public List<Story> findStoryByUserId(Integer userId) throws Exception {
+  public List<Story> findStoryByUserId(Integer userId) throws StoryException, UserException {
     User user = userService.findUserById(userId);
     if (user == null) {
-      throw new Exception("User not found with id: " + userId);
+      throw new StoryException("User not found with id: " + userId);
     }
 
     List<Story> stories = storyRepository.findByUserId(user.getId());
     if (stories == null || stories.isEmpty()) {
-      throw new Exception("No stories found for user with id: " + userId);
+      throw new StoryException("No stories found for user with id: " + userId);
     }
 
     return stories;
