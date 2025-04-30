@@ -1,4 +1,4 @@
-package com.asquare.service;
+package com.asquare.service.Story;
 
 import java.util.List;
 
