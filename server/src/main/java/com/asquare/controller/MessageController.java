@@ -1,6 +1,9 @@
 package com.asquare.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +32,10 @@ public class MessageController {
     User user = userService.findUserByJwt(jwt);
     Message message = messageService.createMessage(user, chatId, reqMessage);
     return message;
+  }
+
+  @GetMapping("/messages/findChatsMessages/chat/{chatId}")
+  public List<Message> findChatsMessagesController(@PathVariable("chatId") Integer chatId) throws Exception {
+    return messageService.findChatsMessages(chatId);
   }
 }
