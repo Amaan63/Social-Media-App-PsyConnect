@@ -1,8 +1,9 @@
-package com.asquare.service;
+package com.asquare.service.User;
 
 import java.util.List;
 import java.util.Optional;
 
+import com.asquare.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

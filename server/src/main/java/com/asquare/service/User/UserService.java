@@ -1,4 +1,4 @@
-package com.asquare.service;
+package com.asquare.service.User;
 
 import java.util.List;
 
