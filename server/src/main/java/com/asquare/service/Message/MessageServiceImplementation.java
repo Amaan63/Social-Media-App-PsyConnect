@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.asquare.exceptions.ChatException;
+import com.asquare.exceptions.MessageException;
 import com.asquare.models.Chat;
 import com.asquare.models.Message;
 import com.asquare.models.User;
@@ -26,18 +28,18 @@ public class MessageServiceImplementation implements MessageService {
   private ChatRepository chatRepository;
 
   @Override
-  public Message createMessage(User user, Integer chatId, Message reqMessage) throws Exception {
+  public Message createMessage(User user, Integer chatId, Message reqMessage) throws MessageException, ChatException {
     if (user == null) {
-      throw new Exception("User must not be null.");
+      throw new MessageException("User must not be null.");
     }
 
     if (reqMessage == null || reqMessage.getContent() == null || reqMessage.getContent().trim().isEmpty()) {
-      throw new Exception("Message content must not be empty.");
+      throw new MessageException("Message content must not be empty.");
     }
 
     Chat chat = chatService.findChatById(chatId);
     if (chat == null) {
-      throw new Exception("Chat not found with the given chat ID: " + chatId);
+      throw new MessageException("Chat not found with the given chat ID: " + chatId);
     }
 
     Message message = new Message();
@@ -56,10 +58,10 @@ public class MessageServiceImplementation implements MessageService {
   }
 
   @Override
-  public List<Message> findChatsMessages(Integer chatId) throws Exception {
+  public List<Message> findChatsMessages(Integer chatId) throws MessageException, ChatException {
     Chat chat = chatService.findChatById(chatId);
     if (chat == null) {
-      throw new Exception("Chat not found with the given chat ID: " + chatId);
+      throw new MessageException("Chat not found with the given chat ID: " + chatId);
     }
     return messageRepository.findByChatId(chatId);
   }
