@@ -38,4 +38,9 @@ public class ChatServiceImplementation implements ChatService {
     }
     return opt.get();
   }
+
+  @Override
+  public List<Chat> findUsersChat(Integer userId) throws Exception {
+    return chatRepository.findByUsersId(userId);
+  }
 }
