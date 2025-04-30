@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asquare.models.Reels;
 import com.asquare.models.User;
-import com.asquare.service.ReelsService;
-import com.asquare.service.UserService;
+import com.asquare.service.Reels.ReelsService;
+import com.asquare.service.User.UserService;
 
 @RestController
 @RequestMapping("/private")

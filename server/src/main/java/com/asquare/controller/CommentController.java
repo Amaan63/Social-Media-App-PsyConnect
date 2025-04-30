@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asquare.models.Comment;
 import com.asquare.models.User;
-import com.asquare.service.CommentService;
-import com.asquare.service.UserService;
+import com.asquare.service.Comment.CommentService;
+import com.asquare.service.User.UserService;
 
 @RestController
 @RequestMapping("/private")

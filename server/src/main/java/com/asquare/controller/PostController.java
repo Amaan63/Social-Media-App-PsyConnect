@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.asquare.models.Post;
 import com.asquare.models.User;
 import com.asquare.response.ApiResponse;
-import com.asquare.service.PostService;
-import com.asquare.service.UserService;
+import com.asquare.service.Post.PostService;
+import com.asquare.service.User.UserService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

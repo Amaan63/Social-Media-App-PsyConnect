@@ -15,7 +15,7 @@ import com.asquare.config.JwtProvider;
 import com.asquare.models.User;
 import com.asquare.request.LoginRequest;
 import com.asquare.response.AuthResponse;
-import com.asquare.service.UserService;
+import com.asquare.service.User.UserService;
 
 @RestController
 @RequestMapping("/public/auth")
