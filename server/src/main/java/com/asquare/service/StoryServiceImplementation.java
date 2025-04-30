@@ -20,9 +20,13 @@ public class StoryServiceImplementation implements StoryService {
   private UserService userService;
 
   @Override
-  public Story createStory(Story story, User user) {
+  public Story createStory(Story story, User user) throws Exception {
     if (story.getCaption() == null || story.getImage() == null) {
       throw new IllegalArgumentException("Caption and image cannot be null.");
+    } else if (story.getImage().isEmpty()) {
+      throw new IllegalArgumentException("Image Cannot Be null");
+    } else if (story.getCaption().isEmpty()) {
+      throw new IllegalAccessException("Caption Cannot be Null");
     }
 
     Story createdStory = new Story();
