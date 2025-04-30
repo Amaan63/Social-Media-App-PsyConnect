@@ -1,4 +1,4 @@
-package com.asquare.service;
+package com.asquare.service.Comment;
 
 import com.asquare.models.Comment;
 

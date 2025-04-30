@@ -1,9 +1,11 @@
-package com.asquare.service;
+package com.asquare.service.Comment;
 
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import com.asquare.service.Post.PostService;
+import com.asquare.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
