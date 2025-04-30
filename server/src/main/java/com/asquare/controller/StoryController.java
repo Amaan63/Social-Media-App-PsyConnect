@@ -40,4 +40,16 @@ public class StoryController {
           .body("Failed to create story: " + e.getMessage());
     }
   }
+
+  @GetMapping("/story/findUserStory/users/{userId}")
+  public ResponseEntity<?> findUserStory(@PathVariable("userId") Integer userId,
+      @RequestHeader("Authorization") String jwt) {
+    try {
+      List<Story> stories = storyService.findStoryByUserId(userId);
+      return ResponseEntity.ok(stories);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+          .body("Failed to retrieve stories: " + e.getMessage());
+    }
+  }
 }
