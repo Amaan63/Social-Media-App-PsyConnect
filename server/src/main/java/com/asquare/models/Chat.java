@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class Chat {
 
   @ManyToMany
   private List<User> users = new ArrayList<>();
+
+  @OneToMany(mappedBy = "chat")
+  private List<Message> messagess = new ArrayList<>();
 
   private LocalDateTime createdAt;
 
