@@ -29,15 +29,28 @@ public class PostServiceImplementation implements PostService {
 
   @Override
   public Post createNewPost(Post post, Integer userId) throws PostException, UserException {
-
     User user = userService.findUserById(userId);
+
+    // Validate caption
+    if (post.getCaption() == null || post.getCaption().trim().isEmpty()) {
+      throw new PostException("Caption cannot be null or empty.");
+    }
+
+    boolean hasImage = post.getImage() != null && !post.getImage().trim().isEmpty();
+    boolean hasVideo = post.getVideo() != null && !post.getVideo().trim().isEmpty();
+
+    // Only one of image or video must be provided
+    if ((hasImage && hasVideo) || (!hasImage && !hasVideo)) {
+      throw new PostException("Provide either an image or a video, not both or none.");
+    }
 
     Post newPost = new Post();
     newPost.setCaption(post.getCaption());
-    newPost.setImage(post.getImage());
+    newPost.setImage(hasImage ? post.getImage() : "Not Provided");
+    newPost.setVideo(hasVideo ? post.getVideo() : "Not Provided");
     newPost.setCreatedAt(LocalDateTime.now());
-    newPost.setVideo(post.getVideo());
     newPost.setUser(user);
+
     postRepository.save(newPost);
     return newPost;
   }
