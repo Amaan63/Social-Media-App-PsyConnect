@@ -28,4 +28,13 @@ public class GlobalExceptions {
         LocalDateTime.now());
     return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(ChatException.class)
+  public ResponseEntity<ErrorDetails> chatExceptionHandler(ChatException ex, WebRequest request) {
+    ErrorDetails error = new ErrorDetails(
+        ex.getMessage(),
+        request.getDescription(false),
+        LocalDateTime.now());
+    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+  }
 }
