@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.asquare.models.Chat;
 import com.asquare.models.Message;
 import com.asquare.models.User;
+import com.asquare.repository.ChatRepository;
 import com.asquare.repository.MessageRepository;
 import com.asquare.service.Chat.ChatService;
 
@@ -19,7 +20,10 @@ public class MessageServiceImplementation implements MessageService {
   private MessageRepository messageRepository;
 
   @Autowired
-  ChatService chatService;
+  private ChatService chatService;
+
+  @Autowired
+  private ChatRepository chatRepository;
 
   @Override
   public Message createMessage(User user, Integer chatId, Message reqMessage) throws Exception {
@@ -42,7 +46,13 @@ public class MessageServiceImplementation implements MessageService {
     message.setImage(reqMessage.getImage());
     message.setUser(user);
     message.setCreatedAt(LocalDateTime.now());
-    return messageRepository.save(message);
+
+    Message savedMessage = messageRepository.save(message);
+
+    chat.getMessagess().add(savedMessage);
+    chatRepository.save(chat);
+
+    return savedMessage;
   }
 
   @Override
