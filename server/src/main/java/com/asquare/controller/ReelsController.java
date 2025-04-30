@@ -52,7 +52,7 @@ public class ReelsController {
     }
   }
 
-  @GetMapping("reels/users/{userId}")
+  @GetMapping("reels/findUsersReel/users/{userId}")
   public ResponseEntity<?> findUsersReel(@PathVariable("userId") Integer userId) {
     try {
       List<Reels> allReels = reelsService.findUsersReel(userId);
