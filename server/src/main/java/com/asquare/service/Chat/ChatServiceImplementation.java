@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.asquare.exceptions.ChatException;
 import com.asquare.models.Chat;
 import com.asquare.models.User;
 import com.asquare.repository.ChatRepository;
@@ -18,9 +19,9 @@ public class ChatServiceImplementation implements ChatService {
   private ChatRepository chatRepository;
 
   @Override
-  public Chat createChat(User loggedInUser, User targetUser) throws Exception {
+  public Chat createChat(User loggedInUser, User targetUser) throws ChatException {
     if (loggedInUser == null || targetUser == null) {
-      throw new Exception("Both users must be valid to create a chat.");
+      throw new ChatException("Both users must be valid to create a chat.");
     }
 
     Chat isExist = chatRepository.findChatBetweenUsers(loggedInUser, targetUser);
@@ -36,16 +37,16 @@ public class ChatServiceImplementation implements ChatService {
   }
 
   @Override
-  public Chat findChatById(Integer chatId) throws Exception {
+  public Chat findChatById(Integer chatId) throws ChatException {
     return chatRepository.findById(chatId)
-        .orElseThrow(() -> new Exception("Chat not found with id - " + chatId));
+        .orElseThrow(() -> new ChatException("Chat not found with id - " + chatId));
   }
 
   @Override
-  public List<Chat> findUsersChat(Integer userId) throws Exception {
+  public List<Chat> findUsersChat(Integer userId) throws ChatException {
     List<Chat> chats = chatRepository.findByUsersId(userId);
     if (chats.isEmpty()) {
-      throw new Exception("No chats found for user with id - " + userId);
+      throw new ChatException("No chats found for user with id - " + userId);
     }
     return chats;
   }
