@@ -29,4 +29,13 @@ public class ChatServiceImplementation implements ChatService {
     chat.setCreatedAt(LocalDateTime.now());
     return chatRepository.save(chat);
   }
+
+  @Override
+  public Chat findChatById(Integer chatId) throws Exception {
+    Optional<Chat> opt = chatRepository.findById(chatId);
+    if (opt.isEmpty()) {
+      throw new Exception("Chat Not Found with id - " + chatId);
+    }
+    return opt.get();
+  }
 }
