@@ -18,14 +18,14 @@ public class ChatServiceImplementation implements ChatService {
   private ChatRepository chatRepository;
 
   @Override
-  public Chat createChat(User reqUser, User user2) throws Exception {
-    Chat isExist = chatRepository.findChatByUsersId(user2, reqUser);
+  public Chat createChat(User loggedInUser, User targetUser) throws Exception {
+    Chat isExist = chatRepository.findChatBetweenUsers(loggedInUser, targetUser);
     if (isExist != null) {
       return isExist;
     }
     Chat chat = new Chat();
-    chat.getUsers().add(user2);
-    chat.getUsers().add(reqUser);
+    chat.getUsers().add(targetUser);
+    chat.getUsers().add(loggedInUser);
     chat.setCreatedAt(LocalDateTime.now());
     return chatRepository.save(chat);
   }
