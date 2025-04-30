@@ -50,4 +50,24 @@ public class ChatController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
     }
   }
+
+  @GetMapping("/chats/findUsersChat")
+  public ResponseEntity<?> findUsersChat(@RequestHeader("Authorization") String jwt) {
+    try {
+      User user = userService.findUserByJwt(jwt);
+      if (user == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");
+      }
+
+      List<Chat> chats = chatService.findUsersChat(user.getId());
+      if (chats.isEmpty()) {
+        return ResponseEntity.ok("No chats found for the user.");
+      }
+
+      return ResponseEntity.ok(chats);
+
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+    }
+  }
 }
