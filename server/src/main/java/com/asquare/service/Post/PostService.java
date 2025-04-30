@@ -1,4 +1,4 @@
-package com.asquare.service;
+package com.asquare.service.Post;
 
 import java.util.List;
 
