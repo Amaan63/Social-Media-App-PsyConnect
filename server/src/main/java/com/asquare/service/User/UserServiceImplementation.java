@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.asquare.config.JwtProvider;
+import com.asquare.exceptions.UserException;
 import com.asquare.models.User;
 import com.asquare.repository.UserRepository;
 
@@ -42,12 +43,12 @@ public class UserServiceImplementation implements UserService {
   }
 
   @Override
-  public User findUserById(Integer userId) throws Exception {
+  public User findUserById(Integer userId) throws UserException {
     Optional<User> user = userRepository.findById(userId);
     if (user.isPresent()) {
       return user.get();
     }
-    throw new Exception("user Not Exist with the UserId " + userId);
+    throw new UserException("user Not Exist with the UserId " + userId);
   }
 
   @Override
@@ -57,7 +58,7 @@ public class UserServiceImplementation implements UserService {
   }
 
   @Override
-  public User followUser(Integer reqUserId, Integer userId2) throws Exception {
+  public User followUser(Integer reqUserId, Integer userId2) throws UserException {
     // Here request user wants to follow user2
     User reqUser = findUserById(reqUserId);
     User user2 = findUserById(userId2);
@@ -73,10 +74,10 @@ public class UserServiceImplementation implements UserService {
   }
 
   @Override
-  public User updateuser(User user, Integer userId) throws Exception {
+  public User updateuser(User user, Integer userId) throws UserException {
     Optional<User> user1 = userRepository.findById(userId);
     if (user1.isEmpty()) {
-      throw new Exception("User not exixts with the id" + userId);
+      throw new UserException("User not exixts with the id" + userId);
     }
     User oldUser = user1.get();
     if (user.getFirstName() != null) {
@@ -101,18 +102,18 @@ public class UserServiceImplementation implements UserService {
   }
 
   @Override
-  public void checkIfUserExistsByEmail(String email) throws Exception {
+  public void checkIfUserExistsByEmail(String email) throws UserException {
     // Check if a user already exists with the given email
     User isExist = userRepository.findByEmail(email);
 
     // If the email is already used, throw an exception
     if (isExist != null) {
-      throw new Exception("This email is already used with another account");
+      throw new UserException("This email is already used with another account");
     }
   }
 
   @Override
-  public Authentication authenticate(String email, String password) throws Exception {
+  public Authentication authenticate(String email, String password) throws UserException {
     if (email == null || email.trim().isEmpty()) {
       throw new BadCredentialsException("Email is required, Cannot Be Null");
     }
@@ -123,7 +124,7 @@ public class UserServiceImplementation implements UserService {
       // If the provided password does not match the stored encoded password, throw an
       // exception
       if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-        throw new BadCredentialsException("Password didn't match");
+        throw new UserException("Password didn't match");
       }
 
       // If both email and password are correct, create and return an Authentication
@@ -131,32 +132,32 @@ public class UserServiceImplementation implements UserService {
       // This Authentication object contains the user details and their authorities
       // (roles/permissions)
       return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-    } catch (UsernameNotFoundException ex) {
+    } catch (UserException ex) {
       // If user not found by email
       // If no user is found with the given email, throw an exception indicating
       // invalid username
-      throw new BadCredentialsException("The email " + email + " is not registered");
+      throw new UserException("The email " + email + " is not registered");
     }
   }
 
   @Override
-  public User findUserByJwt(String jwt) throws Exception {
+  public User findUserByJwt(String jwt) throws UserException {
     try {
       String email = JwtProvider.getEmailFromJwtToken(jwt);
 
       if (email == null || email.isEmpty()) {
-        throw new Exception("Invalid JWT token. Email not found.");
+        throw new UserException("Invalid JWT token. Email not found.");
       }
 
       User user = userRepository.findByEmail(email);
       if (user == null) {
-        throw new Exception("User not found for email: " + email);
+        throw new UserException("User not found for email: " + email);
       }
 
       return user;
     } catch (Exception e) {
       // Optional: log the error for debugging
-      throw new Exception("Error while extracting user from JWT: " + e.getMessage());
+      throw new UserException("Error while extracting user from JWT: " + e.getMessage());
     }
   }
 
