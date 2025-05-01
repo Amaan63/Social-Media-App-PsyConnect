@@ -139,7 +139,7 @@ const Register = () => {
             variant="contained"
             color="primary"
           >
-            Register
+            Regsiter
           </Button>
         </Form>
       )}
