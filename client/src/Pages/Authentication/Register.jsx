@@ -8,6 +8,8 @@ import {
   TextField,
 } from "@mui/material";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { registerUserAction } from "../../Redux/Authentication/authentication.action";
 
 const initialValues = {
   firstName: "",
@@ -29,10 +31,12 @@ const validationSchema = Yup.object({
 
 const Register = () => {
   const [formValue, setFormValue] = useState();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
     console.log("Form submitted", values);
     setFormValue(values);
+    dispatch(registerUserAction({ data: values }));
   };
 
   return (
