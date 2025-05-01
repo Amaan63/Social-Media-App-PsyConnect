@@ -3,6 +3,7 @@ import { Grid, Card } from "@mui/material";
 import authBg from "../../assets/images/auth/authBg.jpg";
 import Login from "./Login";
 import Register from "./Register";
+import { Route, Routes } from "react-router-dom";
 
 const Authentication = () => {
   return (
@@ -28,8 +29,11 @@ const Authentication = () => {
                 Connecting Lives, Sharing Stories: Your Social World Your Way
               </p>
             </div>
-            {/* <Login /> */}
-            <Register />
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
           </Card>
         </div>
       </Grid>
