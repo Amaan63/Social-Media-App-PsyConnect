@@ -10,6 +10,7 @@ import {
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { registerUserAction } from "../../Redux/Authentication/authentication.action";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   firstName: "",
@@ -32,6 +33,7 @@ const validationSchema = Yup.object({
 const Register = () => {
   const [formValue, setFormValue] = useState();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (values) => {
     console.log("Form submitted", values);
@@ -40,114 +42,130 @@ const Register = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ values, handleChange }) => (
-        <Form className="space-y-5">
-          <div>
-            <Field
-              as={TextField}
-              name="firstName"
-              placeholder="Enter First Name"
-              variant="outlined"
-              fullWidth
-            />
-            <ErrorMessage
-              name="firstName"
-              component="div"
-              className="text-red-500"
-            />
-          </div>
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ values, handleChange }) => (
+          <Form className="space-y-5">
+            <div>
+              <Field
+                as={TextField}
+                name="firstName"
+                placeholder="Enter First Name"
+                variant="outlined"
+                fullWidth
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
 
-          <div>
-            <Field
-              as={TextField}
-              name="lastName"
-              placeholder="Enter Last Name"
-              variant="outlined"
-              fullWidth
-            />
-            <ErrorMessage
-              name="lastName"
-              component="div"
-              className="text-red-500"
-            />
-          </div>
+            <div>
+              <Field
+                as={TextField}
+                name="lastName"
+                placeholder="Enter Last Name"
+                variant="outlined"
+                fullWidth
+              />
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
 
-          <div>
-            <Field
-              as={TextField}
-              name="email"
-              placeholder="Enter Email"
-              type="email"
-              variant="outlined"
-              fullWidth
-            />
-            <ErrorMessage
-              name="email"
-              component="div"
-              className="text-red-500"
-            />
-          </div>
+            <div>
+              <Field
+                as={TextField}
+                name="email"
+                placeholder="Enter Email"
+                type="email"
+                variant="outlined"
+                fullWidth
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
 
-          <div>
-            <Field
-              as={TextField}
-              name="password"
-              placeholder="Enter Password"
-              type="password"
-              variant="outlined"
-              fullWidth
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="text-red-500"
-            />
-          </div>
+            <div>
+              <Field
+                as={TextField}
+                name="password"
+                placeholder="Enter Password"
+                type="password"
+                variant="outlined"
+                fullWidth
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
 
-          <div>
-            Gender
-            <RadioGroup
-              row
-              name="gender"
-              value={values.gender}
-              onChange={handleChange}
+            <div>
+              Gender
+              <RadioGroup
+                row
+                name="gender"
+                value={values.gender}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
+              </RadioGroup>
+              <ErrorMessage
+                name="gender"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+
+            <Button
+              sx={{ padding: ".8rem 0rem" }}
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
             >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Female"
-              />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Other"
-              />
-            </RadioGroup>
-            <ErrorMessage
-              name="gender"
-              component="div"
-              className="text-red-500"
-            />
-          </div>
-
-          <Button
-            sx={{ padding: ".8rem 0rem" }}
-            fullWidth
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Regsiter
-          </Button>
-        </Form>
-      )}
-    </Formik>
+              Regsiter
+            </Button>
+          </Form>
+        )}
+      </Formik>
+      <div className="flex gap-2 items-center justify-center pt-5">
+        <p>Already have an Account ?</p>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => navigate("/")}
+        >
+          Login
+        </Button>
+      </div>
+    </>
   );
 };
 
