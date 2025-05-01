@@ -42,7 +42,7 @@ public class AppConfig {
       public CorsConfiguration getCorsConfiguration(HttpServletRequest arg0) {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOrigins(Arrays.asList(
-            "https://localhost:5173/*"));
+            "http://localhost:5173"));
         cfg.setAllowedMethods(Collections.singletonList("*"));
         cfg.setAllowCredentials(true);
         cfg.setAllowedHeaders(Collections.singletonList("*"));
