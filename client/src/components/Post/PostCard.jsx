@@ -20,7 +20,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 
 const PostCard = () => {
   return (
-    <Card className="">
+    <Card>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

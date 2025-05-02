@@ -59,7 +59,7 @@ const MiddlePart = () => {
           </div>
         </div>
       </Card>
-      <div className="mt-5 m-5  space-y-5">
+      <div className="mt-5 m-8  space-y-5">
         {posts.map((item) => (
           <PostCard key={item} />
         ))}
