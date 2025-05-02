@@ -33,11 +33,13 @@ const Home = () => {
           </Routes>
         </Grid>
 
-        <Grid item xs={0} lg={3} className="relative">
-          <div className="sticky top-0 w-full">
-            <HomeRight />
-          </div>
-        </Grid>
+        {location.pathname === "/" && (
+          <Grid item xs={0} lg={3} className="relative">
+            <div className="sticky top-0 w-full">
+              <HomeRight />
+            </div>
+          </Grid>
+        )}
       </Grid>
     </div>
   );
