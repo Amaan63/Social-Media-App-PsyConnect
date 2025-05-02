@@ -1,12 +1,12 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import { Route, Routes, useLocation } from "react-router-dom";
-import MainFeedSection from "../../components/MiddlePart/MainFeedSection";
 import Reels from "../../components/Reels/Reels";
 import CreateReelsForm from "../../components/Reels/CreateReelsForm";
 import Profile from "../Profile/Profile";
 import HomeRight from "../../components/Home Components/HomeRight";
 import SideBar from "../../components/SideBar/SideBar";
+import MiddlePart from "../../components/MiddlePart/MiddlePart";
 
 const Home = () => {
   const location = useLocation();
@@ -26,7 +26,7 @@ const Home = () => {
           className="px-5 flex justify-center"
         >
           <Routes>
-            <Route path="/" element={<MainFeedSection />} />
+            <Route path="/" element={<MiddlePart />} />
             <Route path="/reels" element={<Reels />} />
             <Route path="/create-reels" element={<CreateReelsForm />} />
             <Route path="/profile/:id" element={<Profile />} />
