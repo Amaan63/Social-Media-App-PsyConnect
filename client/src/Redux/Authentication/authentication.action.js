@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../../config/api";
+import { api, API_BASE_URL } from "../../config/api";
 import {
   GET_PROFILE_FAILURE,
   GET_PROFILE_REQUEST,
@@ -10,6 +10,9 @@ import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  UPDATE_PROFILE_FAILURE,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
 } from "./authentication.actionType";
 
 {
@@ -47,7 +50,7 @@ export const registerUserAction = (loginData) => async (dispatch) => {
     );
 
     if (data.token) {
-      localStorage.setItem("jwt", data.jwt);
+      localStorage.setItem("jwt", data.token);
     }
 
     console.log("Register Successfull", data);
@@ -68,11 +71,28 @@ export const getUserProfileAction = (jwt) => async (dispatch) => {
         Authorization: `Bearer ${jwt}`,
       },
     });
-    console.log("Profile ----- ", data);
+    console.log(" GET Profile ----- ", data);
 
     dispatch({ type: GET_PROFILE_SUCCESS, payload: data });
   } catch (error) {
     console.log("Error -----------", error);
     dispatch({ type: GET_PROFILE_FAILURE, payload: error });
+  }
+};
+
+export const updateUserProfileAction = (reqData) => async (dispatch) => {
+  dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+  try {
+    const { data } = await api.put(
+      `${API_BASE_URL}/private/user/update`,
+      reqData
+    );
+    console.log(" Update Profile ----- ", data);
+
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
+  } catch (error) {
+    console.log("Error -----------", error);
+    dispatch({ type: UPDATE_PROFILE_FAILURE, payload: error });
   }
 };
