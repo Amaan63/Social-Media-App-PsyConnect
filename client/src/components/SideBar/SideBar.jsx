@@ -3,7 +3,9 @@ import { navigationMenu } from "./SideBarNavigation";
 import { Avatar, Button, Card, Divider, Menu, MenuItem } from "@mui/material";
 import avatarIcon from "../../assets/images/Home/Avatar.svg";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useSelector } from "react-redux";
 const SideBar = () => {
+  const { auth } = useSelector((store) => store);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -35,8 +37,15 @@ const SideBar = () => {
             <div className="flex items-center space-x-3">
               <Avatar src={avatarIcon} />
               <div>
-                <p className="font-bold">Amaan Sayyed</p>
-                <p className="opacity-70">@Amaan63</p>
+                <p className="font-bold">
+                  {auth.user?.firstName + " " + auth.user?.lastName}
+                </p>
+                <p className="opacity-70">
+                  @
+                  {auth.user?.firstName.toLowerCase() +
+                    "_" +
+                    auth.user.lastName.toLowerCase()}
+                </p>
               </div>
             </div>
             <Button
