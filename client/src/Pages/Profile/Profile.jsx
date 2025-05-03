@@ -125,11 +125,11 @@ const Profile = () => {
                 ))}
               </div>
             ) : value === "reels" ? (
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2">
                 {reels.map((item) => (
                   <div
                     key={item}
-                    className="flex justify-center-safe flex-wrap gap-32 my-10"
+                    className="flex justify-center-safe flex-wrap gap-3 my-2"
                   >
                     <UserReelCard />
                   </div>
