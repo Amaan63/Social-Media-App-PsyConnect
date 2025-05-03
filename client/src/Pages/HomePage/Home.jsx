@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Reels from "../../components/Reels/Reels";
@@ -7,9 +7,16 @@ import Profile from "../Profile/Profile";
 import HomeRight from "../../components/Home Components/HomeRight";
 import SideBar from "../../components/SideBar/SideBar";
 import MiddlePart from "../../components/MiddlePart/MiddlePart";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfileAction } from "../../Redux/Authentication/authentication.action";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
+  const jwt = localStorage.getItem("jwt");
+  const { auth } = useSelector((store) => store);
+
+ 
   return (
     <div className="px-20">
       <Grid container spacing={0}>
