@@ -1,6 +1,9 @@
 import axios from "axios";
 import { API_BASE_URL } from "../../config/api";
 import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -29,7 +32,7 @@ export const loginUserAction = (loginData) => async (dispatch) => {
 
     dispatch({ type: LOGIN_SUCCESS, payload: data.token }); // ✅ Dispatch success action with token
   } catch (error) {
-    console.log("-----------", error); // 🐞 Log any error for debugging
+    console.log("Error -----------", error); // 🐞 Log any error for debugging
     dispatch({ type: LOGIN_FAILURE, payload: error }); // ❌ Dispatch failure action with error
   }
 };
@@ -51,7 +54,25 @@ export const registerUserAction = (loginData) => async (dispatch) => {
 
     dispatch({ type: REGISTER_SUCCESS, payload: data.token });
   } catch (error) {
-    console.log("-----------", error);
+    console.log("Error -----------", error);
     dispatch({ type: REGISTER_FAILURE, payload: error });
+  }
+};
+
+export const getUserProfileAction = (jwt) => async (dispatch) => {
+  dispatch({ type: GET_PROFILE_REQUEST });
+
+  try {
+    const { data } = await axios.get(`${API_BASE_URL}/private/user/profile`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+    console.log("Profile ----- ", data);
+
+    dispatch({ type: GET_PROFILE_SUCCESS, payload: data });
+  } catch (error) {
+    console.log("Error -----------", error);
+    dispatch({ type: GET_PROFILE_FAILURE, payload: error });
   }
 };
