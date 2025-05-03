@@ -112,27 +112,19 @@ const Profile = () => {
               ))}
             </Tabs>
           </Box>
-          <div className="flex justify-center">
+          <div className="flex justify-center m-5">
             {value === "post" ? (
-              <div className="space-y-5 w-[70%] my-10">
+              <div className="space-y-5 w-[100%] ">
                 {posts.map((item) => (
-                  <div
-                    key={item}
-                    className="border border-slate-500 rounnded-md"
-                  >
+                  <div key={item} className="w-full">
                     <PostCard />
                   </div>
                 ))}
               </div>
             ) : value === "reels" ? (
-              <div className="flex flex-col gap-2">
+              <div className="flex justify-center flex-wrap gap-3 my-2 ">
                 {reels.map((item) => (
-                  <div
-                    key={item}
-                    className="flex justify-center-safe flex-wrap gap-3 my-2"
-                  >
-                    <UserReelCard />
-                  </div>
+                  <UserReelCard key={item} />
                 ))}
               </div>
             ) : (
