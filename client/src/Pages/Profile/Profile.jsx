@@ -14,6 +14,7 @@ const tabs = [
 ];
 const posts = [1, 2, 3, 4, 5];
 const reels = [1, 2, 3, 4, 5];
+const savedPosts = [1, 2, 3, 4];
 const Profile = () => {
   const { id } = useParams();
   const [value, setValue] = React.useState("post");
@@ -127,8 +128,16 @@ const Profile = () => {
                   <UserReelCard key={item} />
                 ))}
               </div>
+            ) : value === "saved" ? (
+              <div className="space-y-5 w-[100%] ">
+                {savedPosts.map((item) => (
+                  <div key={item} className="w-full">
+                    <PostCard />
+                  </div>
+                ))}
+              </div>
             ) : (
-              alert("Error Occured")
+              <div>Repost</div>
             )}
           </div>
         </section>

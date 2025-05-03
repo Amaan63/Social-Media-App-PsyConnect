@@ -14,9 +14,9 @@ const MiddlePart = () => {
     console.log("Open Post Model");
   };
   return (
-    <div className="px-20">
-      <section className="flex  items-center p-5 rounded-b-md">
-        <div className="flex flex-col items-center mr-4 cursor-pointer">
+    <div className="px-4 sm:px-8 md:px-20">
+      <section className="flex items-center p-5 rounded-b-md overflow-x-auto">
+        <div className="flex flex-col items-center mr-4 cursor-pointer flex-shrink-0">
           <Avatar sx={{ width: "5rem", height: "5rem" }}>
             <AddIcon sx={{ fontSize: "3rem" }} />
           </Avatar>
@@ -27,16 +27,17 @@ const MiddlePart = () => {
         ))}
       </section>
 
-      <Card className="p-5 m-5 ">
-        <div className="flex justify-between">
+      <Card className="p-5 m-5">
+        <div className="flex justify-between items-center">
           <Avatar />
           <input
             readOnly
-            className="outline-none w-[90%]  rounded-full px-5 bg-transparent border-[#3b4054] border"
+            className="outline-none w-full md:w-[90%] rounded-full px-5 bg-transparent border border-[#3b4054]"
             type="text"
+            placeholder="What's on your mind?"
           />
         </div>
-        <div className="flex justify-center space-x-9 mt-5">
+        <div className="flex justify-center space-x-5 mt-5">
           <div className="flex items-center">
             <IconButton color="primary" onClick={handleOpenCreatePostModel}>
               <ImageIcon />
@@ -59,7 +60,8 @@ const MiddlePart = () => {
           </div>
         </div>
       </Card>
-      <div className="mt-5 m-8  space-y-5">
+
+      <div className="mt-5 m-8 space-y-5">
         {posts.map((item) => (
           <PostCard key={item} />
         ))}

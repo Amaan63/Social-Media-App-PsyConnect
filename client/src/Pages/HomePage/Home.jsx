@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div className="px-20">
       <Grid container spacing={0}>
-        <Grid item xs={0} lg={3}>
+        <Grid item xs={0} lg={3} sx={{ display: { xs: "none", lg: "block" } }}>
           <div className="sticky top-0">
             <SideBar />
           </div>
@@ -34,7 +34,13 @@ const Home = () => {
         </Grid>
 
         {location.pathname === "/" && (
-          <Grid item xs={0} lg={3} className="relative">
+          <Grid
+            item
+            xs={0}
+            lg={3}
+            sx={{ display: { xs: "none", lg: "block" } }}
+            className="relative"
+          >
             <div className="sticky top-0 w-full">
               <HomeRight />
             </div>
