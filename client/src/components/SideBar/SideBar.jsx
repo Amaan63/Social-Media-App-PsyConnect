@@ -4,8 +4,10 @@ import { Avatar, Button, Card, Divider, Menu, MenuItem } from "@mui/material";
 import avatarIcon from "../../assets/images/Home/Avatar.svg";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const SideBar = () => {
   const { auth } = useSelector((store) => store);
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,6 +25,7 @@ const SideBar = () => {
         <div className="space-y-8">
           {navigationMenu.map((item) => (
             <div
+              onClick={() => navigate(item.path)}
               key={item.title}
               className=" cursor-pointer flex space-x-3 items-center"
             >
