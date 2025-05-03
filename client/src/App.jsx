@@ -18,7 +18,7 @@ function App() {
     <>
       <Routes>
         <Route path="/*" element={auth.user ? <Home /> : <Authentication />} />
-        <Route path="/message" element={<Message />} />
+        {/* <Route path="/message" element={<Message />} /> */}
         {/* After / anything will come will go to Authentication */}
         <Route path="/*" element={<Authentication />} />
       </Routes>

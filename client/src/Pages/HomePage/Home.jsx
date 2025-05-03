@@ -16,7 +16,6 @@ const Home = () => {
   const jwt = localStorage.getItem("jwt");
   const { auth } = useSelector((store) => store);
 
- 
   return (
     <div className="px-20">
       <Grid container spacing={0}>
