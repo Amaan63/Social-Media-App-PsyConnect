@@ -8,6 +8,13 @@ import { useNavigate } from "react-router-dom";
 const SideBar = () => {
   const { auth } = useSelector((store) => store);
   const navigate = useNavigate();
+  const handleNavigate = (item) => {
+    if (item.title === "Profile") {
+      navigate(`/profile/${auth.user?.id}`);
+    } else {
+      navigate(item.path);
+    }
+  };
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -25,7 +32,7 @@ const SideBar = () => {
         <div className="space-y-8">
           {navigationMenu.map((item) => (
             <div
-              onClick={() => navigate(item.path)}
+              onClick={() => handleNavigate(item)}
               key={item.title}
               className=" cursor-pointer flex space-x-3 items-center"
             >
