@@ -1,4 +1,7 @@
 import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -11,6 +14,7 @@ const initialState = {
   jwt: null,
   error: null,
   loading: false,
+  user: null,
 };
 
 export const authenticationReducer = (state = initialState, action) => {
@@ -21,8 +25,12 @@ export const authenticationReducer = (state = initialState, action) => {
 
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
+    case GET_PROFILE_REQUEST:
       return { ...state, loading: true, error: null };
     // 🚀 Login started: set loading true, clear previous errors
+
+    case GET_PROFILE_SUCCESS:
+      return { ...state, user: action.payload, error: null, loading: false };
 
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -31,6 +39,7 @@ export const authenticationReducer = (state = initialState, action) => {
 
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
+    case GET_PROFILE_FAILURE:
       return { ...state, loading: false, error: action.payload };
     // ❌ Login failed: stop loading, store error message
 
