@@ -1,5 +1,5 @@
 import { Avatar, Card, IconButton } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StoryCircle from "./StoryCircle";
 import AddIcon from "@mui/icons-material/Add";
 import ImageIcon from "@mui/icons-material/Image";
@@ -7,10 +7,14 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import ArticleIcon from "@mui/icons-material/Article";
 import PostCard from "../Post/PostCard";
 import CreatePostModal from "../Post/CreatePostModal";
+import { useDispatch } from "react-redux";
+import { getAllPostAction } from "../../Redux/Post/post.action";
 
 const story = [11, 12, 13, 45, 69, 1];
 const posts = [1, 2, 3, 4, 5, 6];
 const MiddlePart = () => {
+  const dispatch = useDispatch();
+
   const [openCreatePostModal, setOpenCreatePostModal] = useState(false);
 
   const handleCloseCreatePostModal = () => setOpenCreatePostModal(false);
@@ -19,6 +23,10 @@ const MiddlePart = () => {
     setOpenCreatePostModal(true);
     console.log("Open Post Model");
   };
+
+  useEffect(()=>{
+    dispatch(getAllPostAction())
+  })
 
   return (
     <div className="px-4 sm:px-8 md:px-20">
