@@ -7,13 +7,14 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import ArticleIcon from "@mui/icons-material/Article";
 import PostCard from "../Post/PostCard";
 import CreatePostModal from "../Post/CreatePostModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllPostAction } from "../../Redux/Post/post.action";
 
 const story = [11, 12, 13, 45, 69, 1];
-const posts = [1, 2, 3, 4, 5, 6];
 const MiddlePart = () => {
   const dispatch = useDispatch();
+  const { post } = useSelector((store) => store);
+  console.log("Post Store.....", post);
 
   const [openCreatePostModal, setOpenCreatePostModal] = useState(false);
 
@@ -24,9 +25,9 @@ const MiddlePart = () => {
     console.log("Open Post Model");
   };
 
-  useEffect(()=>{
-    dispatch(getAllPostAction())
-  })
+  useEffect(() => {
+    dispatch(getAllPostAction());
+  }, []);
 
   return (
     <div className="px-4 sm:px-8 md:px-20">
@@ -81,8 +82,8 @@ const MiddlePart = () => {
       </Card>
 
       <div className="mt-5 m-8 space-y-5">
-        {posts.map((item) => (
-          <PostCard key={item} />
+        {post.posts.map((item) => (
+          <PostCard item={item} />
         ))}
       </div>
       <div>

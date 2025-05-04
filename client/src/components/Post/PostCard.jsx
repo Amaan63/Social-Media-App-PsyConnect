@@ -18,7 +18,11 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 
-const PostCard = () => {
+const PostCard = ({ item }) => {
+  console.log("Video URL:", item.video);
+  const isValidImage = item.image && item.image !== "Not Provided";
+  const isValidVideo = item.video && item.video !== "Not Provided";
+
   return (
     <Card sx={{ width: "100%" }} elevation={3}>
       <CardHeader
@@ -32,20 +36,45 @@ const PostCard = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Amaan Sayyed"
-        subheader="@Amaan63"
+        title={item.user.firstName + " " + item.user.lastName}
+        subheader={
+          "@" +
+          item.user.firstName.toLowerCase() +
+          " " +
+          item.user.lastName.toLowerCase()
+        }
       />
-      <CardMedia
-        component="img"
-        height="194"
-        image="https://cdn.pixabay.com/photo/2022/11/08/05/26/grilled-shrimp-7577730_1280.jpg"
-        alt="Paella dish"
-      />
+      {isValidImage ? (
+        <CardMedia
+          component="img"
+          height="194"
+          image={item.image}
+          alt="Post image"
+        />
+      ) : isValidVideo ? (
+        <CardMedia
+          component="div"
+          sx={{ position: "relative", paddingTop: "56.25%" }}
+        >
+          <video
+            controls
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <source src={item.video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </CardMedia>
+      ) : null}
+
       <CardContent>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {item.caption}
         </Typography>
       </CardContent>
       <CardActions className="flex justify-between" disableSpacing>
