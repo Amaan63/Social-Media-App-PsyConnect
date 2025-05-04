@@ -80,6 +80,7 @@ export const getUserProfileAction = (jwt) => async (dispatch) => {
   }
 };
 
+// Redux action (updateUserProfileAction)
 export const updateUserProfileAction = (reqData) => async (dispatch) => {
   dispatch({ type: UPDATE_PROFILE_REQUEST });
 
@@ -87,12 +88,16 @@ export const updateUserProfileAction = (reqData) => async (dispatch) => {
     const { data } = await api.put(
       `${API_BASE_URL}/private/user/update`,
       reqData
-    );
-    console.log(" Update Profile ----- ", data);
+    ); // API request
 
+    // Dispatch success action if API responds
     dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
+    return data; // If everything goes well, return data to be used in the component
   } catch (error) {
-    console.log("Error -----------", error);
+    // Dispatch failure action in case of error
     dispatch({ type: UPDATE_PROFILE_FAILURE, payload: error });
+
+    // If the error is related to network issues, we throw it to be caught in the component
+    throw error; // Propagate error to be caught in the component
   }
 };
