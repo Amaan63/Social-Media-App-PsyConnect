@@ -40,9 +40,9 @@ public class PostServiceImplementation implements PostService {
     boolean hasVideo = post.getVideo() != null && !post.getVideo().trim().isEmpty();
 
 //    // Only one of image or video must be provided
-//    if ((hasImage && hasVideo) || (!hasImage && !hasVideo)) {
-//      throw new PostException("Provide either an image or a video, not both or none.");
-//    }
+    if ((hasImage && hasVideo) || (!hasImage && !hasVideo)) {
+      throw new PostException("Provide either an image or a video, not both or none.");
+    }
 
     Post newPost = new Post();
     newPost.setCaption(post.getCaption());
