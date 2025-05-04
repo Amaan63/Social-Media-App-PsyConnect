@@ -6,11 +6,11 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const SideBar = () => {
-  const { auth } = useSelector((store) => store);
+  const user = useSelector((store) => store.auth.user);
   const navigate = useNavigate();
   const handleNavigate = (item) => {
     if (item.title === "Profile") {
-      navigate(`/home/profile/${auth.user?.id}`);
+      navigate(`/home/profile/${user?.id}`);
     } else {
       navigate(item.path);
     }
@@ -47,17 +47,19 @@ const SideBar = () => {
             <div className="flex items-center space-x-3">
               <Avatar src={avatarIcon} />
               <div>
-                <p className="font-bold">
-                  {(auth.user?.firstName || "") +
-                    " " +
-                    (auth.user?.lastName || "")}
-                </p>
-                <p className="opacity-70">
-                  @
-                  {(auth.user?.firstName || "").toLowerCase() +
-                    "_" +
-                    (auth.user?.lastName || "").toLowerCase()}
-                </p>
+                {user ? (
+                  <>
+                    <h1 className="py-1 font-bold text-xl">
+                      {`${user.firstName} ${user.lastName}`}
+                    </h1>
+                    <p>
+                      @
+                      {`${user.firstName.toLowerCase()}_${user.lastName.toLowerCase()}`}
+                    </p>
+                  </>
+                ) : (
+                  <p>Loading...</p>
+                )}
               </div>
             </div>
             <Button

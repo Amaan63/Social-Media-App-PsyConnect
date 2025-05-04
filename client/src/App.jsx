@@ -12,10 +12,15 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const { auth } = useSelector((store) => store);
+  const { auth } = useSelector((store) => store.auth);
+
   useEffect(() => {
-    dispatch(getUserProfileAction(jwt));
-  }, [jwt]);
+    // Check if there's no user data AND the profile isn't already being fetched
+    if (!auth?.user && !auth?.loading) {
+      dispatch(getUserProfileAction(jwt));
+    }
+  }, [jwt, auth?.user, auth?.loading, dispatch]);
+
   return (
     <>
       <Routes>
