@@ -13,6 +13,8 @@ import { useFormik } from "formik";
 import ImageIcon from "@mui/icons-material/Image";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
+import { useDispatch } from "react-redux";
+import { createPostAction } from "../../Redux/Post/post.action";
 
 const style = {
   position: "absolute",
@@ -31,6 +33,7 @@ const CreatePostModal = ({ open, handleClose }) => {
   const [selectedImage, setSelectedImage] = useState();
   const [selectedVideo, setSelectedVideo] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const handleSelectImage = async (event) => {
     setIsLoading(true);
     const imageUrl = await uploadToCloudinary(event.target.files[0], "image");
@@ -53,6 +56,7 @@ const CreatePostModal = ({ open, handleClose }) => {
     },
     onSubmit: (values) => {
       console.log("formik Values", values);
+      dispatch(createPostAction(values));
     },
   });
   return (
