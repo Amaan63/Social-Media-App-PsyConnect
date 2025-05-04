@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button, TextField } from "@mui/material";
 import * as Yup from "yup";
 import { loginUserAction } from "../../Redux/Authentication/authentication.action";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const initialValues = {
   email: "",
@@ -20,13 +21,27 @@ const validationSchema = Yup.object({
 
 const Login = () => {
   const [formValue, setFormValue] = useState();
+  const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const auth = useSelector((state) => state.auth);
 
   const handleSubmit = (values) => {
     console.log("Form submitted", values);
     dispatch(loginUserAction({ data: values }));
+    setSubmitted(true);
   };
+  useEffect(() => {
+    if (submitted) {
+      if (auth.jwt) {
+        toast.success("Login successful!");
+        navigate("/home");
+      } else if (auth.error) {
+        toast.error("Login failed. Please check credentials.");
+        setSubmitted(false);
+      }
+    }
+  }, [auth.jwt, auth.error, submitted]);
 
   return (
     <>
