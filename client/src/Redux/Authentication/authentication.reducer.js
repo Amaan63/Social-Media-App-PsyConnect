@@ -8,6 +8,9 @@ import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILURE,
 } from "./authentication.actionType";
 
 const initialState = {
@@ -26,10 +29,14 @@ export const authenticationReducer = (state = initialState, action) => {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
     case GET_PROFILE_REQUEST:
+    case UPDATE_PROFILE_REQUEST: // 🟡 Profile update started
       return { ...state, loading: true, error: null };
     // 🚀 Login started: set loading true, clear previous errors
 
     case GET_PROFILE_SUCCESS:
+      return { ...state, user: action.payload, error: null, loading: false };
+
+    case UPDATE_PROFILE_SUCCESS: // ✅ Profile updated: update user in state
       return { ...state, user: action.payload, error: null, loading: false };
 
     case LOGIN_SUCCESS:
@@ -40,6 +47,7 @@ export const authenticationReducer = (state = initialState, action) => {
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
     case GET_PROFILE_FAILURE:
+    case UPDATE_PROFILE_FAILURE: // ❌ Profile update failed
       return { ...state, loading: false, error: action.payload };
     // ❌ Login failed: stop loading, store error message
 
