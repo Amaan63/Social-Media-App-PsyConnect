@@ -10,7 +10,7 @@ const SideBar = () => {
   const navigate = useNavigate();
   const handleNavigate = (item) => {
     if (item.title === "Profile") {
-      navigate(`/profile/${auth.user?.id}`);
+      navigate(`/home/profile/${auth.user?.id}`);
     } else {
       navigate(item.path);
     }
@@ -48,13 +48,15 @@ const SideBar = () => {
               <Avatar src={avatarIcon} />
               <div>
                 <p className="font-bold">
-                  {auth.user?.firstName + " " + auth.user?.lastName}
+                  {(auth.user?.firstName || "") +
+                    " " +
+                    (auth.user?.lastName || "")}
                 </p>
                 <p className="opacity-70">
                   @
-                  {auth.user?.firstName.toLowerCase() +
+                  {(auth.user?.firstName || "").toLowerCase() +
                     "_" +
-                    auth.user.lastName.toLowerCase()}
+                    (auth.user?.lastName || "").toLowerCase()}
                 </p>
               </div>
             </div>
