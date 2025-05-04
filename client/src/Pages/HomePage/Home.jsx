@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid } from "@mui/material";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Reels from "../../components/Reels/Reels";
@@ -7,14 +7,11 @@ import Profile from "../Profile/Profile";
 import HomeRight from "../../components/Home Components/HomeRight";
 import SideBar from "../../components/SideBar/SideBar";
 import MiddlePart from "../../components/MiddlePart/MiddlePart";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserProfileAction } from "../../Redux/Authentication/authentication.action";
+import { useDispatch } from "react-redux";
 
 const Home = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const jwt = localStorage.getItem("jwt");
-  const { auth } = useSelector((store) => store);
 
   return (
     <div className="px-20">
@@ -28,18 +25,18 @@ const Home = () => {
         <Grid
           item
           xs={12}
-          lg={location.pathname === "/" ? 6 : 9}
+          lg={location.pathname === "/home" ? 6 : 9}
           className="px-5 flex justify-center"
         >
           <Routes>
-            <Route path="/" element={<MiddlePart />} />
-            <Route path="/reels" element={<Reels />} />
-            <Route path="/create-reels" element={<CreateReelsForm />} />
-            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/" element={<MiddlePart />} />S
+            <Route path="reels" element={<Reels />} />
+            <Route path="create-reels" element={<CreateReelsForm />} />
+            <Route path="profile/:id" element={<Profile />} />
           </Routes>
         </Grid>
 
-        {location.pathname === "/" && (
+        {location.pathname === "/home" && (
           <Grid
             item
             xs={0}
