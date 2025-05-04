@@ -2,6 +2,9 @@ import {
   CREATE_POST_FAILURE,
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
+  GET_ALL_POST_FAILURE,
+  GET_ALL_POST_REQUEST,
+  GET_ALL_POST_SUCCESS,
 } from "./post.actionType";
 import { api, API_BASE_URL } from "../../config/api";
 
@@ -17,5 +20,17 @@ export const createPostAction = (postData) => async (dispatch) => {
   } catch (error) {
     console.log("error ", error);
     dispatch({ type: CREATE_POST_FAILURE, payload: error });
+  }
+};
+
+export const getAllPostAction = () => async (dispatch) => {
+  dispatch({ type: GET_ALL_POST_REQUEST });
+  try {
+    const { data } = await api.get(`${API_BASE_URL}/private/posts/allPosts`);
+    dispatch({ type: GET_ALL_POST_SUCCESS, payload: data });
+    console.log("GET All Posts DATA ---  ", data);
+  } catch (error) {
+    console.log("error ", error);
+    dispatch({ type: GET_ALL_POST_FAILURE, payload: error });
   }
 };
