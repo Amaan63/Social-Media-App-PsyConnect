@@ -29,10 +29,10 @@ const Home = () => {
           className="px-5 flex justify-center"
         >
           <Routes>
-            <Route path="/" element={<MiddlePart />} />S
+            <Route path="/" element={<MiddlePart />} />
+            <Route path="profile/:id" element={<Profile />} />
             <Route path="reels" element={<Reels />} />
             <Route path="create-reels" element={<CreateReelsForm />} />
-            <Route path="profile/:id" element={<Profile />} />
           </Routes>
         </Grid>
 
