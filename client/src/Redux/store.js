@@ -5,10 +5,12 @@ import { applyMiddleware, combineReducers, legacy_createStore } from "redux";
 import { thunk } from "redux-thunk"; // ✅ named import
 
 import { authenticationReducer } from "./Authentication/authentication.reducer";
+import { postReducer } from "./Post/post.reducer";
 
 // combineReducers se multiple reducers ko ek sath combine karne ka structure banaya gaya hai
 const rootReducers = combineReducers({
   auth: authenticationReducer,
+  post: postReducer,
 });
 
 // legacy_createStore se store banaya ja raha hai
