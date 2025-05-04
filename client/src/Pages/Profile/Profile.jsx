@@ -5,6 +5,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PostCard from "../../components/Post/PostCard";
 import UserReelCard from "../../components/Reels/UserReelCard";
+import { useSelector } from "react-redux";
+import ProfileModal from "./ProfileModal";
 
 const tabs = [
   { value: "post", name: "Posts" },
@@ -16,8 +18,15 @@ const posts = [1, 2, 3, 4, 5];
 const reels = [1, 2, 3, 4, 5];
 const savedPosts = [1, 2, 3, 4];
 const Profile = () => {
-  const { id } = useParams();
+  const user = useSelector((store) => store.auth.user);
   const [value, setValue] = React.useState("post");
+  const [open, setOpen] = React.useState(false);
+  const handleOpenProfileModal = () => {
+    //console.log("Opening modal..."); // Check this in browser console
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -43,6 +52,7 @@ const Profile = () => {
               variant="outlined"
               color="primary"
               size="large"
+              onClick={handleOpenProfileModal}
               sx={{
                 minWidth: "fit-content",
                 paddingX: 2,
@@ -82,8 +92,19 @@ const Profile = () => {
         </div>
         <div className="p-5">
           <div>
-            <h1 className="py-1 font-bold text-xl">Amaan Sayyed</h1>
-            <p>@Amaan</p>
+            {user ? (
+              <>
+                <h1 className="py-1 font-bold text-xl">
+                  {`${user.firstName} ${user.lastName}`}
+                </h1>
+                <p>
+                  @
+                  {`${user.firstName.toLowerCase()}_${user.lastName.toLowerCase()}`}
+                </p>
+              </>
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
           <div className="flex gap-5 items-center py-3">
             <span>41 post</span>
@@ -109,7 +130,7 @@ const Profile = () => {
               aria-label="secondary tabs example"
             >
               {tabs.map((item) => (
-                <Tab key={item} value={item.value} label={item.name} />
+                <Tab key={item.value} value={item.value} label={item.name} />
               ))}
             </Tabs>
           </Box>
@@ -142,6 +163,9 @@ const Profile = () => {
           </div>
         </section>
       </div>
+      <section>
+        <ProfileModal open={open} handleClose={handleClose} />
+      </section>
     </Card>
   );
 };
