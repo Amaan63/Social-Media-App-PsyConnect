@@ -18,11 +18,24 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { useDispatch, useSelector } from "react-redux";
+import { createCommentAction } from "../../Redux/Post/post.action";
 
 const PostCard = ({ item }) => {
+  const dispatch = useDispatch();
+  const { post } = useSelector((store) => store.post);
   const isValidImage = item.image && item.image !== "Not Provided";
   const isValidVideo = item.video && item.video !== "Not Provided";
   const [showComments, setShowComments] = useState(false);
+  const handleCreateComment = (content) => {
+    const reqData = {
+      postId: item.id,
+      data: {
+        content,
+      },
+    };
+    dispatch(createCommentAction(reqData));
+  };
 
   const handleShowComment = () => setShowComments(!showComments);
 
@@ -101,9 +114,9 @@ const PostCard = ({ item }) => {
             <input
               onKeyPress={(e) => {
                 if (e.key == "Enter") {
-                  console.log("Enter Pressed ------ ", e.target.value);
                   {
-                    ("}");
+                    handleCreateComment(e.target.value);
+                    console.log("Enter Pressed ------ ", e.target.value);
                   }
                 }
               }}
@@ -115,18 +128,18 @@ const PostCard = ({ item }) => {
             />
           </div>
           <Divider />
-          <div className="mx-3 space-y-2 my-5 text-xs">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-5">
+          {item.comments?.map((comment) => (
+            <div className="mx-3 space-y-2 my-5 text-xs">
+              <div key={comment.id} className="flex items-center space-x-5">
                 <Avatar
                   sx={{ height: "2rem", width: "2rem", fontSize: "0.8rem" }}
                 >
-                  A
+                  {comment.user.firstName[0]}
                 </Avatar>
-                <p>Nice Image</p>
+                <p>{comment.content}</p>
               </div>
             </div>
-          </div>
+          ))}
         </section>
       )}
     </Card>
