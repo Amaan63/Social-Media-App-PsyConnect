@@ -19,11 +19,16 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { useDispatch, useSelector } from "react-redux";
-import { createCommentAction } from "../../Redux/Post/post.action";
+import {
+  createCommentAction,
+  likePostAction,
+} from "../../Redux/Post/post.action";
+import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 
 const PostCard = ({ item }) => {
   const dispatch = useDispatch();
-  const { post } = useSelector((store) => store.post);
+
+  const user = useSelector((store) => store.auth.user);
   const isValidImage = item.image && item.image !== "Not Provided";
   const isValidVideo = item.video && item.video !== "Not Provided";
   const [showComments, setShowComments] = useState(false);
@@ -38,6 +43,12 @@ const PostCard = ({ item }) => {
   };
 
   const handleShowComment = () => setShowComments(!showComments);
+
+  const handleLikePost = () => {
+    dispatch(likePostAction(item.id));
+  };
+
+  console.log("is Liked..", isLikedByReqUser(user.id, item));
 
   return (
     <Card sx={{ width: "100%" }} elevation={3}>
@@ -61,12 +72,15 @@ const PostCard = ({ item }) => {
         }
       />
       {isValidImage ? (
-        <CardMedia
-          component="img"
-          height="194"
-          image={item.image}
-          alt="Post image"
-        />
+        // {/*<CardMedia
+        //   component="img"
+        //   height="100"
+        //   image={item.image}
+        //   alt="Post image"
+        // /> */}
+        <div className="flex justify-center items-center h-full">
+          <img className="w-auto h-[30rem]" src={item.image} alt="" />
+        </div>
       ) : isValidVideo ? (
         <CardMedia
           component="div"
@@ -95,8 +109,12 @@ const PostCard = ({ item }) => {
       </CardContent>
       <CardActions className="flex justify-between" disableSpacing>
         <div>
-          <IconButton>
-            {true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <IconButton onClick={handleLikePost}>
+            {isLikedByReqUser(user.id, item) ? (
+              <FavoriteIcon className="text-red-500" />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
           </IconButton>
           <IconButton>
             <ShareIcon />
