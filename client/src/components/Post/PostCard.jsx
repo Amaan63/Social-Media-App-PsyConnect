@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Card,
@@ -6,6 +6,7 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  Divider,
   IconButton,
   Typography,
 } from "@mui/material";
@@ -19,9 +20,11 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 
 const PostCard = ({ item }) => {
-  console.log("Video URL:", item.video);
   const isValidImage = item.image && item.image !== "Not Provided";
   const isValidVideo = item.video && item.video !== "Not Provided";
+  const [showComments, setShowComments] = useState(false);
+
+  const handleShowComment = () => setShowComments(!showComments);
 
   return (
     <Card sx={{ width: "100%" }} elevation={3}>
@@ -85,12 +88,47 @@ const PostCard = ({ item }) => {
           <IconButton>
             <ShareIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleShowComment}>
             <ChatBubbleIcon />
           </IconButton>
         </div>
         <div>{true ? <BookmarkIcon /> : <BookmarkBorderIcon />}</div>
       </CardActions>
+      {showComments && (
+        <section>
+          <div className="flex items-center space-x-5 mx-3 my-5">
+            <Avatar sx={{}} />
+            <input
+              onKeyPress={(e) => {
+                if (e.key == "Enter") {
+                  console.log("Enter Pressed ------ ", e.target.value);
+                  {
+                    ("}");
+                  }
+                }
+              }}
+              className="w-full outline-none bg-transparent border border-[#3b4054] rounded-full px-5 py-2"
+              type="text"
+              name="comment"
+              id=""
+              placeholder="write your comments....."
+            />
+          </div>
+          <Divider />
+          <div className="mx-3 space-y-2 my-5 text-xs">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-5">
+                <Avatar
+                  sx={{ height: "2rem", width: "2rem", fontSize: "0.8rem" }}
+                >
+                  A
+                </Avatar>
+                <p>Nice Image</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </Card>
   );
 };
