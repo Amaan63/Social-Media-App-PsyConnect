@@ -61,7 +61,7 @@ export const getUsersPostAction = (userId) => async (dispatch) => {
 export const likePostAction = (postId) => async (dispatch) => {
   dispatch({ type: LIKE_POST_REQUEST });
   try {
-    const { data } = await api.get(
+    const { data } = await api.put(
       `${API_BASE_URL}/private/posts/likePost/${postId}`
     );
     dispatch({ type: LIKE_POST_SUCCESS, payload: data });
