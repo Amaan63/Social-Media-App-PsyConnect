@@ -1,10 +1,11 @@
 import React from "react";
 import { navigationMenu } from "./SideBarNavigation";
 import { Avatar, Button, Card, Divider, Menu, MenuItem } from "@mui/material";
-import avatarIcon from "../../assets/images/Home/Avatar.svg";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { red } from "@mui/material/colors";
+
 const SideBar = () => {
   const user = useSelector((store) => store.auth.user);
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const SideBar = () => {
           <Divider />
           <div className="pl-5 flex items-center justify-between mt-4">
             <div className="flex items-center space-x-3">
-              <Avatar src={avatarIcon} />
+              <Avatar sx={{ bgcolor: red[500] }}>{user?.firstName[0]}</Avatar>
               <div>
                 {user ? (
                   <>
