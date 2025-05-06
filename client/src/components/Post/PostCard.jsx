@@ -147,7 +147,7 @@ const PostCard = ({ item }) => {
           </div>
           <Divider />
           {item.comments?.map((comment) => (
-            <div className="mx-3 space-y-2 my-5 text-xs">
+            <div className="mx-3 space-y-2 my-5 text-xs flex items-center justify-between">
               <div key={comment.id} className="flex items-center space-x-5">
                 <Avatar
                   sx={{ height: "2rem", width: "2rem", fontSize: "0.8rem" }}
@@ -155,6 +155,13 @@ const PostCard = ({ item }) => {
                   {comment.user.firstName[0]}
                 </Avatar>
                 <p>{comment.content}</p>
+              </div>
+              <div>
+                {false ? (
+                  <FavoriteIcon className="text-red-500" fontSize="inherit" />
+                ) : (
+                  <FavoriteBorderIcon />
+                )}
               </div>
             </div>
           ))}
