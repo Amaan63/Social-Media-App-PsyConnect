@@ -8,13 +8,13 @@ import {
   Modal,
 } from "@mui/material";
 import React, { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { useFormik } from "formik";
 import ImageIcon from "@mui/icons-material/Image";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import { useDispatch } from "react-redux";
 import { createPostAction } from "../../Redux/Post/post.action";
+import { toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -29,7 +29,7 @@ const style = {
   outline: "none",
 };
 
-const CreatePostModal = ({ open, handleClose }) => {
+const CreatePostModal = ({ open, handleClose, user }) => {
   const [selectedImage, setSelectedImage] = useState();
   const [selectedVideo, setSelectedVideo] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -54,9 +54,18 @@ const CreatePostModal = ({ open, handleClose }) => {
       image: "",
       video: "",
     },
-    onSubmit: (values) => {
-      console.log("formik Values", values);
-      dispatch(createPostAction(values));
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const result = await dispatch(createPostAction(values)).unwrap?.(); // or just dispatch(...)
+        toast.success("Post created successfully!");
+        resetForm(); // ✅ Clear the form fields
+        setSelectedImage(null);
+        setSelectedVideo(null);
+        handleClose(); // ✅ Close modal
+      } catch (error) {
+        toast.error("Failed to create post. Try again.");
+        console.error("Create post error", error);
+      }
     },
   });
   return (
@@ -72,8 +81,16 @@ const CreatePostModal = ({ open, handleClose }) => {
             <div className="flex-space-x-4 items-center">
               <Avatar />
               <div>
-                <p className="font-bold text-lg">Amaan Sayyed</p>
-                <p className="text-sm">@amaan63</p>
+                <p className="font-bold text-lg">
+                  {user?.firstName && user?.lastName
+                    ? `${user.firstName} ${user.lastName}`
+                    : "Loading..."}
+                </p>
+                <p className="text-sm">
+                  {user?.firstName && user?.lastName
+                    ? `@${user.firstName.toLowerCase()}_${user.lastName.toLowerCase()}`
+                    : ""}
+                </p>
               </div>
             </div>
             <textarea
@@ -138,8 +155,9 @@ const CreatePostModal = ({ open, handleClose }) => {
                 variant="contained"
                 color="primary"
                 sx={{ borderRadius: "1.5rem" }}
+                disabled={isLoading}
               >
-                Post
+                {isLoading ? "Posting..." : "Post"}
               </Button>
             </div>
           </div>
