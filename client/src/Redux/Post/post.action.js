@@ -11,6 +11,9 @@ import {
   GET_USERS_POST_FAILURE,
   GET_USERS_POST_REQUEST,
   GET_USERS_POST_SUCCESS,
+  LIKE_COMMENT_FAILURE,
+  LIKE_COMMENT_REQUEST,
+  LIKE_COMMENT_SUCCESS,
   LIKE_POST_FAILURE,
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
@@ -85,5 +88,20 @@ export const createCommentAction = (reqData) => async (dispatch) => {
   } catch (error) {
     console.log("error ", error);
     dispatch({ type: CREATE_COMMENT_FAILURE, payload: error });
+  }
+};
+
+// Like COmment
+export const likeCommentAction = (commentId) => async (dispatch) => {
+  dispatch({ type: LIKE_COMMENT_REQUEST });
+  try {
+    const { data } = await api.put(
+      `${API_BASE_URL}/private/comments/likeComment/${commentId}`
+    );
+    dispatch({ type: LIKE_COMMENT_SUCCESS, payload: data });
+    console.log("Like Comment Success ---  ", data);
+  } catch (error) {
+    console.log("error ", error);
+    dispatch({ type: LIKE_COMMENT_FAILURE, payload: error });
   }
 };
