@@ -11,6 +11,9 @@ import {
   GET_USERS_POST_FAILURE,
   GET_USERS_POST_REQUEST,
   GET_USERS_POST_SUCCESS,
+  LIKE_COMMENT_FAILURE,
+  LIKE_COMMENT_REQUEST,
+  LIKE_COMMENT_SUCCESS,
   LIKE_POST_FAILURE,
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
@@ -33,6 +36,7 @@ export const postReducer = (state = initialState, action) => {
     case LIKE_POST_REQUEST:
     case GET_USERS_POST_REQUEST:
     case CREATE_COMMENT_REQUEST:
+    case LIKE_COMMENT_REQUEST:
       return { ...state, error: null, loading: true };
 
     case CREATE_POST_SUCCESS:
@@ -72,10 +76,22 @@ export const postReducer = (state = initialState, action) => {
         error: null,
       };
 
+    case LIKE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.map((post) => ({
+          ...post,
+          comments: post.comments.map((comment) =>
+            comment.id === action.payload.id ? action.payload : comment
+          ),
+        })),
+      };
+
     case CREATE_POST_FAILURE:
     case GET_ALL_POST_FAILURE:
     case LIKE_POST_FAILURE:
     case CREATE_COMMENT_FAILURE:
+    case LIKE_COMMENT_FAILURE:
       return { ...state, error: action.payload, loading: false };
 
     default:
