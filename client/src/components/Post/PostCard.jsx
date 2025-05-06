@@ -21,6 +21,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCommentAction,
+  likeCommentAction,
   likePostAction,
 } from "../../Redux/Post/post.action";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
@@ -48,7 +49,11 @@ const PostCard = ({ item }) => {
     dispatch(likePostAction(item.id));
   };
 
-  console.log("is Liked..", isLikedByReqUser(user.id, item));
+  const handleLikeComment = (commentId) => {
+    dispatch(likeCommentAction(commentId));
+  };
+
+  // console.log("is Liked ..", isLikedByReqUser(user.id, item));
 
   return (
     <Card sx={{ width: "100%" }} elevation={3}>
@@ -157,11 +162,13 @@ const PostCard = ({ item }) => {
                 <p>{comment.content}</p>
               </div>
               <div>
-                {false ? (
-                  <FavoriteIcon className="text-red-500" fontSize="inherit" />
-                ) : (
-                  <FavoriteBorderIcon />
-                )}
+                <IconButton onClick={() => handleLikeComment(comment.id)}>
+                  {isLikedByReqUser(user.id, comment) ? (
+                    <FavoriteIcon className="text-red-500" fontSize="inherit" />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
+                </IconButton>
               </div>
             </div>
           ))}
