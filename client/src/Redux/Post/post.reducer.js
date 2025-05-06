@@ -38,8 +38,8 @@ export const postReducer = (state = initialState, action) => {
     case CREATE_POST_SUCCESS:
       return {
         ...state,
-        post: action.payload,
-        posts: [action.payload, ...state.post],
+        post: action.payload, // for current post (optional)
+        posts: [action.payload, ...(state.posts || [])], // updated posts array
         loading: false,
         error: null,
       };
