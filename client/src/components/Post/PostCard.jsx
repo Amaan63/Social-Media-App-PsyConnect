@@ -25,6 +25,9 @@ import {
   likePostAction,
 } from "../../Redux/Post/post.action";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import SendIcon from "@mui/icons-material/Send";
 
 const PostCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -132,24 +135,41 @@ const PostCard = ({ item }) => {
       </CardActions>
       {showComments && (
         <section>
-          <div className="flex items-center space-x-5 mx-3 my-5">
-            <Avatar sx={{}} />
-            <input
-              onKeyPress={(e) => {
-                if (e.key == "Enter") {
-                  {
-                    handleCreateComment(e.target.value);
-                    console.log("Enter Pressed ------ ", e.target.value);
-                  }
-                }
-              }}
-              className="w-full outline-none bg-transparent border border-[#3b4054] rounded-full px-5 py-2"
-              type="text"
-              name="comment"
-              id=""
-              placeholder="write your comments....."
-            />
-          </div>
+          <Formik
+            initialValues={{
+              comment: "",
+            }}
+            validationSchema={Yup.object({
+              comment: Yup.string().trim().required("Comment cannot be empty"),
+            })}
+            onSubmit={(values, { resetForm }) => {
+              handleCreateComment(values.comment);
+              resetForm(); // Clear input after submission
+            }}
+          >
+            {({ handleReset }) => (
+              <Form>
+                <div className="flex items-center space-x-3 mx-3 my-5">
+                  <Avatar sx={{}} />
+                  <Field
+                    type="text"
+                    name="comment"
+                    placeholder="Write your comment..."
+                    className="w-full outline-none bg-transparent border border-[#3b4054] rounded-full px-5 py-2"
+                  />
+                  <button type="submit" className="text-[#3b4054]">
+                    <SendIcon />
+                  </button>
+                </div>
+                <ErrorMessage
+                  name="comment"
+                  component="div"
+                  className="text-red-500 text-xs mx-3 -mt-2"
+                />
+              </Form>
+            )}
+          </Formik>
+
           <Divider />
           {item.comments?.map((comment) => (
             <div className="mx-3 space-y-2 my-5 text-xs flex items-center justify-between">
