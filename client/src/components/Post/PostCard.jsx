@@ -55,7 +55,7 @@ const PostCard = ({ item }) => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            {item.user.firstName[0]}
           </Avatar>
         }
         action={
@@ -111,7 +111,7 @@ const PostCard = ({ item }) => {
         <div>
           <IconButton onClick={handleLikePost}>
             {isLikedByReqUser(user.id, item) ? (
-              <FavoriteIcon className="text-red-500" />
+              <FavoriteIcon className="text-red-500 " />
             ) : (
               <FavoriteBorderIcon />
             )}
