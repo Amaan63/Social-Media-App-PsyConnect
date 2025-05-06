@@ -14,7 +14,7 @@ const story = [11, 12, 13, 45, 69, 1];
 const MiddlePart = () => {
   const dispatch = useDispatch();
   const { post } = useSelector((store) => store);
-  console.log("Post Store.....", post);
+  const user = useSelector((store) => store.auth.user);
 
   const [openCreatePostModal, setOpenCreatePostModal] = useState(false);
 
@@ -27,7 +27,7 @@ const MiddlePart = () => {
 
   useEffect(() => {
     dispatch(getAllPostAction());
-  }, [post.newComment]);
+  }, [post.newComment, post.post]);
 
   return (
     <div className="px-4 sm:px-8 md:px-20">
@@ -88,6 +88,7 @@ const MiddlePart = () => {
       </div>
       <div>
         <CreatePostModal
+          user={user}
           handleClose={handleCloseCreatePostModal}
           open={openCreatePostModal}
         />
