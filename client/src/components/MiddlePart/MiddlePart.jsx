@@ -14,8 +14,9 @@ import { grey } from "@mui/material/colors";
 const story = [11, 12, 13, 45, 69, 1];
 const MiddlePart = () => {
   const dispatch = useDispatch();
-  const { post } = useSelector((store) => store);
+  const { post, error } = useSelector((store) => store.post);
   const user = useSelector((store) => store.auth.user);
+  console.log(error);
 
   const [openCreatePostModal, setOpenCreatePostModal] = useState(false);
 
@@ -28,7 +29,7 @@ const MiddlePart = () => {
 
   useEffect(() => {
     dispatch(getAllPostAction());
-  }, [post.newComment, post.post]);
+  }, [post?.newComment, post?.post]);
 
   return (
     <div className="px-4 sm:px-8 md:px-20">
@@ -86,9 +87,21 @@ const MiddlePart = () => {
       </Card>
 
       <div className="mt-5 m-8 space-y-5">
-        {post.posts.map((item) => (
-          <PostCard item={item} />
-        ))}
+        {error ? (
+          <div className="text-center text-red-500 py-10">
+            Cannot connect to the server. Please try again later.
+          </div>
+        ) : !post || !post.posts ? (
+          <div className="text-center text-gray-500 py-10">
+            Loading posts...
+          </div>
+        ) : post.posts.length === 0 ? (
+          <div className="text-center text-red-500 py-10">
+            No Posts Available.
+          </div>
+        ) : (
+          post.posts.map((item) => <PostCard key={item.id} item={item} />)
+        )}
       </div>
       <div>
         <CreatePostModal
