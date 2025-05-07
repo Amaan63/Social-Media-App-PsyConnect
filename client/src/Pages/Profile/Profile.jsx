@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Avatar, Box, Button, Card, Tab, Tabs } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PostCard from "../../components/Post/PostCard";
 import UserReelCard from "../../components/Reels/UserReelCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileModal from "./ProfileModal";
+import { getUsersPostAction } from "../../Redux/Post/post.action";
 
 const tabs = [
   { value: "post", name: "Posts" },
@@ -19,6 +20,8 @@ const reels = [1, 2, 3, 4, 5];
 const savedPosts = [1, 2, 3, 4];
 const Profile = () => {
   const user = useSelector((store) => store.auth.user);
+  const { post } = useSelector((store) => store);
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState("post");
   const [open, setOpen] = React.useState(false);
   const handleOpenProfileModal = () => {
@@ -31,6 +34,11 @@ const Profile = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    dispatch(getUsersPostAction(user.id));
+  }, [post.newComment, post.post]);
+
   return (
     <Card className="my-10 w-[70%] ">
       <div className="rounded-md">
@@ -137,9 +145,9 @@ const Profile = () => {
           <div className="flex justify-center m-5">
             {value === "post" ? (
               <div className="space-y-5 w-[100%] ">
-                {posts.map((item) => (
+                {post.posts.map((item) => (
                   <div key={item} className="w-full">
-                    <PostCard />
+                    <PostCard item={item} />
                   </div>
                 ))}
               </div>
