@@ -32,7 +32,7 @@ export const navigationMenu = [
   {
     title: "Message",
     icon: <MessageIcon />,
-    path: "/home/message",
+    path: "/message",
   },
   {
     title: "Lists",
