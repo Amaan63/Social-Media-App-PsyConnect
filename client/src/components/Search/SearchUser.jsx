@@ -1,7 +1,9 @@
 import React from "react";
 import { Card } from "@mui/material";
 import { Avatar, CardHeader } from "@mui/material";
-import { grey, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
+import ErrorIcon from "@mui/icons-material/Error";
+import { Box } from "@mui/system";
 
 const SearchUser = () => {
   const handleSearchUser = () => {
@@ -22,7 +24,7 @@ const SearchUser = () => {
           onChange={handleSearchUser}
         />
       </div>
-      {true && (
+      {false ? (
         <Card sx={{ border: "1px solid", borderColor: grey[500] }}>
           <CardHeader
             onClick={() => {
@@ -35,6 +37,11 @@ const SearchUser = () => {
             subheader={"amaansayyed63"}
           />
         </Card>
+      ) : (
+        <div className="flex justify-center-safe gap-2  p-2 rounded">
+          <ErrorIcon className="text-red-500" />
+          <h3 className="text-base font-semibold">User Not Found</h3>
+        </div>
       )}
     </div>
   );
