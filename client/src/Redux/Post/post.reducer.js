@@ -57,6 +57,15 @@ export const postReducer = (state = initialState, action) => {
         error: null,
       };
 
+    case GET_USERS_POST_SUCCESS:
+      return {
+        ...state,
+        posts: action.payload,
+        comments: [action.payload.comments],
+        loading: false,
+        error: null,
+      };
+
     case LIKE_POST_SUCCESS:
       return {
         ...state,
@@ -92,6 +101,7 @@ export const postReducer = (state = initialState, action) => {
     case LIKE_POST_FAILURE:
     case CREATE_COMMENT_FAILURE:
     case LIKE_COMMENT_FAILURE:
+    case GET_USERS_POST_FAILURE:
       return { ...state, error: action.payload, loading: false };
 
     default:
