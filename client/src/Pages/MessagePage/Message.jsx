@@ -6,6 +6,7 @@ import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { Link } from "react-router-dom";
+import UserChatCard from "./UserChatCard";
 
 const Message = () => {
   const handleSelectImage = () => {
@@ -30,7 +31,10 @@ const Message = () => {
                   Search User
                   <SearchUser />
                 </div>
-                <div className="h-full space-y-4 mt-5 overflow-y-scroll hideScrollbar">User Chat Card</div>
+                <div className="h-full space-y-4 mt-5 overflow-y-scroll hideScrollbar">
+                  User Chat Card
+                  <UserChatCard />
+                </div>
               </div>
             </div>
           </div>
