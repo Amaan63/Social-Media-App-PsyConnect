@@ -1,9 +1,7 @@
 import React from "react";
-import { Card } from "@mui/material";
-import { Avatar, CardHeader } from "@mui/material";
+import { Card, Avatar, CardHeader } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ErrorIcon from "@mui/icons-material/Error";
-import { Box } from "@mui/system";
 
 const SearchUser = () => {
   const handleSearchUser = () => {
