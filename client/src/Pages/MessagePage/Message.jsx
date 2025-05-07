@@ -5,6 +5,7 @@ import WestIcon from "@mui/icons-material/West";
 import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { Link } from "react-router-dom";
 
 const Message = () => {
   const handleSelectImage = () => {
@@ -18,9 +19,12 @@ const Message = () => {
           <div className="flex h-full justify-between space-x-2">
             <div className="w-full">
               <div className="flex space-x-4 items-center py-5">
-                <WestIcon />
-                <h1 className="text-xl font-bold">Home</h1>
+                <Link to="/home" className="flex items-center space-x-2">
+                  <WestIcon />
+                  <h1 className="text-xl font-bold">Home</h1>
+                </Link>
               </div>
+
               <div className="h-[83vh] flex flex-col">
                 <div className="">
                   <SearchUser />
