@@ -9,6 +9,7 @@ import PostCard from "../Post/PostCard";
 import CreatePostModal from "../Post/CreatePostModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPostAction } from "../../Redux/Post/post.action";
+import { grey } from "@mui/material/colors";
 
 const story = [11, 12, 13, 45, 69, 1];
 const MiddlePart = () => {
@@ -43,7 +44,10 @@ const MiddlePart = () => {
         ))}
       </section>
 
-      <Card className="p-5 m-5">
+      <Card
+        className="p-5 m-5"
+        sx={{ border: "1px solid", borderColor: grey[500] }}
+      >
         <div className="flex justify-between items-center cursor-pointer">
           <Avatar />
           <input
