@@ -27,11 +27,10 @@ const Message = () => {
 
               <div className="h-[83vh] flex flex-col">
                 <div className="">
+                  Search User
                   <SearchUser />
                 </div>
-                <div className="h-full space-y-4 mt-5 overflow-y-scroll hideScrollbar">
-                  UserChat Card
-                </div>
+                <div className="h-full space-y-4 mt-5 overflow-y-scroll hideScrollbar">User Chat Card</div>
               </div>
             </div>
           </div>
@@ -52,7 +51,7 @@ const Message = () => {
                 </IconButton>
               </div>
             </div>
-            <div className="hideScrollbar overflow-y-scroll h-[82vh] px-2 space-y-5">
+            <div className="hideScrollbar overflow-y-scroll h-[82vh] px-2 space-y-5  border-l">
               Messages
             </div>
           </div>
