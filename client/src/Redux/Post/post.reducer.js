@@ -20,10 +20,10 @@ import {
 } from "./post.actionType";
 
 const initialState = {
-  post: null,
+  post: null, // single post
+  posts: [], // array of posts
   loading: false,
   error: null,
-  posts: [],
   like: null,
   comments: [],
   newComment: null,
@@ -42,8 +42,8 @@ export const postReducer = (state = initialState, action) => {
     case CREATE_POST_SUCCESS:
       return {
         ...state,
-        post: action.payload, // for current post (optional)
-        posts: [action.payload, ...(state.posts || [])], // updated posts array
+        post: action.payload, // for the single newly created post
+        posts: [action.payload, ...state.posts], // add to top
         loading: false,
         error: null,
       };
@@ -52,7 +52,7 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload,
-        comments: [action.payload.comments],
+        comments: action.payload.comments || [],
         loading: false,
         error: null,
       };
@@ -61,7 +61,7 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload,
-        comments: [action.payload.comments],
+        comments: action.payload.comments || [],
         loading: false,
         error: null,
       };
