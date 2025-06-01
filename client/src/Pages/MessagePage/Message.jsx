@@ -7,6 +7,7 @@ import VideoCallIcon from "@mui/icons-material/VideoCall";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { Link } from "react-router-dom";
 import UserChatCard from "./UserChatCard";
+import ChatMessage from "./ChatMessage";
 
 const Message = () => {
   const handleSelectImage = () => {
@@ -56,7 +57,7 @@ const Message = () => {
               </div>
             </div>
             <div className="hideScrollbar overflow-y-scroll h-[82vh] px-2 space-y-5  border-l">
-              Messages
+              <ChatMessage />
             </div>
           </div>
           <div className="sticky bottom-0 border-l">
