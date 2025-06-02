@@ -11,6 +11,9 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAILURE,
+  SEARCH_USER_SUCCESS,
+  SEARCH_USER_REQUEST,
+  SEARCH_USER_FAILURE,
 } from "./authentication.actionType";
 
 const initialState = {
@@ -18,6 +21,7 @@ const initialState = {
   error: null,
   loading: false,
   user: null,
+  searchUser: [],
 };
 
 export const authenticationReducer = (state = initialState, action) => {
@@ -30,6 +34,7 @@ export const authenticationReducer = (state = initialState, action) => {
     case REGISTER_REQUEST:
     case GET_PROFILE_REQUEST:
     case UPDATE_PROFILE_REQUEST: // 🟡 Profile update started
+    case SEARCH_USER_REQUEST:
       return { ...state, loading: true, error: null };
     // 🚀 Login started: set loading true, clear previous errors
 
@@ -44,10 +49,19 @@ export const authenticationReducer = (state = initialState, action) => {
       return { ...state, jwt: action.payload, loading: false, error: null };
     // ✅ Login successful: save token (jwt), stop loading, clear error
 
+    case SEARCH_USER_SUCCESS:
+      return {
+        ...state,
+        searchUser: action.payload,
+        loading: false,
+        error: null,
+      };
+
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
     case GET_PROFILE_FAILURE:
     case UPDATE_PROFILE_FAILURE: // ❌ Profile update failed
+    case SEARCH_USER_FAILURE:
       return { ...state, loading: false, error: action.payload };
     // ❌ Login failed: stop loading, store error message
 
