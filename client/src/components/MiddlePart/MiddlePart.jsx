@@ -14,7 +14,7 @@ import { grey } from "@mui/material/colors";
 const story = [11, 12, 13, 45, 69, 1];
 const MiddlePart = () => {
   const dispatch = useDispatch();
-  const { posts, error } = useSelector((store) => store.post);
+  const { posts, error, newComment } = useSelector((store) => store.post);
   const user = useSelector((store) => store.auth.user);
   console.log(error);
 
@@ -29,7 +29,7 @@ const MiddlePart = () => {
 
   useEffect(() => {
     dispatch(getAllPostAction());
-  }, [posts?.newComment, posts?.post]);
+  }, [posts?.newComment, posts?.post, newComment]);
 
   return (
     <div className="px-4 sm:px-8 md:px-20">
