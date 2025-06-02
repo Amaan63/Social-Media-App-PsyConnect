@@ -10,6 +10,9 @@ import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  SEARCH_USER_FAILURE,
+  SEARCH_USER_REQUEST,
+  SEARCH_USER_SUCCESS,
   UPDATE_PROFILE_FAILURE,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
@@ -99,5 +102,19 @@ export const updateUserProfileAction = (reqData) => async (dispatch) => {
 
     // If the error is related to network issues, we throw it to be caught in the component
     throw error; // Propagate error to be caught in the component
+  }
+};
+
+export const searchUserAction = (query) => async (dispatch) => {
+  dispatch({ type: SEARCH_USER_REQUEST });
+
+  try {
+    const { data } = await api.get(`/private/users/search?query=${query}`);
+    console.log(" Searched User ----- ", data);
+
+    dispatch({ type: SEARCH_USER_SUCCESS, payload: data });
+  } catch (error) {
+    console.log("Error in Searching user -----------", error);
+    dispatch({ type: SEARCH_USER_FAILURE, payload: error });
   }
 };
