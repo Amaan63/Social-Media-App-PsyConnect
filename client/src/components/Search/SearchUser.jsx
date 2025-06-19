@@ -5,6 +5,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { useDispatch, useSelector } from "react-redux";
 import { searchUserAction } from "../../Redux/Authentication/authentication.action";
 import { SEARCH_USER_SUCCESS } from "../../Redux/Authentication/authentication.actionType";
+import { createChatAction } from "../../Redux/Message/message.action";
 
 const SearchUser = () => {
   const [username, setUsername] = useState("");
@@ -23,8 +24,7 @@ const SearchUser = () => {
   };
 
   const handleClick = (id) => {
-    console.log("Selected User ID:", id);
-    setUsername("");
+    dispatch(createChatAction({ targetUser: id }));
   };
 
   return (
