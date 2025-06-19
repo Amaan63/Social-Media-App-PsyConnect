@@ -38,10 +38,10 @@ export const createChatAction = (chat) => async (dispatch) => {
   }
 };
 
-export const getAllChatsAction = (chat) => async (dispatch) => {
+export const getAllChatsAction = () => async (dispatch) => {
   dispatch({ type: GET_ALL_CHATS_REQUEST });
   try {
-    const { data } = await api.get(`/private/chats/findUsersChat`, chat);
+    const { data } = await api.get(`/private/chats/findUsersChat`);
     console.log("Get All Chat", data);
     dispatch({ type: GET_ALL_CHATS_SUCCESS, payload: data });
   } catch (error) {
