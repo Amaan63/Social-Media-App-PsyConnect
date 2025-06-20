@@ -51,7 +51,7 @@ public class MessageServiceImplementation implements MessageService {
 
     Message savedMessage = messageRepository.save(message);
 
-    chat.getMessagess().add(savedMessage);
+    chat.getMessages().add(savedMessage);
     chatRepository.save(chat);
 
     return savedMessage;

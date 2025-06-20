@@ -32,7 +32,7 @@ public class Chat {
   private List<User> users = new ArrayList<>();
 
   @OneToMany(mappedBy = "chat")
-  private List<Message> messagess = new ArrayList<>();
+  private List<Message> messages = new ArrayList<>();
 
   private LocalDateTime createdAt;
 
