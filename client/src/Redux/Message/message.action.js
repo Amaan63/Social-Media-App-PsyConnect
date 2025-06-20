@@ -15,7 +15,7 @@ export const createMessageAction = (message) => async (dispatch) => {
   dispatch({ type: CREATE_MESSAGE_REQUEST });
   try {
     const { data } = await api.post(
-      `/private/messages/createMessage/chat/{chatid}`,
+      `/private/messages/createMessage/chat/${message.chatId}`,
       message
     );
     console.log("Created Message", data);
