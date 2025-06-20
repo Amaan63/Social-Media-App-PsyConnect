@@ -26,7 +26,12 @@ export const messageReducer = (state = initialState, action) => {
       return { ...state, error: null, loading: true };
 
     case CREATE_MESSAGE_SUCCESS:
-      return { ...state, message: action.payload };
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
+        message: action.payload,
+        loading: false,
+      };
 
     case CREATE_CHAT_SUCCESS:
       return { ...state, chats: [action.payload, ...state.chats] };
